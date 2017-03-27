@@ -1,65 +1,38 @@
 # Lab 5 Logistic Regression Classifier
-import tensorflow as tf
-import numpy as np
-tf.set_random_seed(777)  # for reproducibility
+from neural_network import NeuralNetwork
 
-xy = np.loadtxt('data-03-diabetes.csv', delimiter=',', dtype=np.float32)
-x_data = xy[:, 0:-1]
-y_data = xy[:, [-1]]
 
-print(x_data.shape, y_data.shape)
+class XXX (NeuralNetwork):
+    def init(self):
+        self.set_placeholder(8, 1)
+        self.set_weight_bias(8, 1)
+        self.set_hypothesis(2)
+        self.set_cost_function(2)
+        self.set_optimizer(l_rate=0.01)
 
-# placeholders for a tensor that will be always fed.
-X = tf.placeholder(tf.float32, shape=[None, 8])
-Y = tf.placeholder(tf.float32, shape=[None, 1])
+    def my_log(self, x_data, y_data):
+        pass
 
-W = tf.Variable(tf.random_normal([8, 1]), name='weight')
-b = tf.Variable(tf.random_normal([1]), name='bias')
+        '''
+        1200 0.654603
+        1400 0.640737
+        1600 0.62813
+        1800 0.616668
+        2000 0.606246
+        [[ 0.6939525]]
 
-# Hypothesis using sigmoid: tf.div(1., 1. + tf.exp(tf.matmul(X, W)))
-hypothesis = tf.sigmoid(tf.matmul(X, W) + b)
+         [ 0.55056906]
+         [ 0.71810943]
+         [ 0.72589421]
+         [ 0.58412576]
+         [ 0.73007631]]
 
-# cost/loss function
-cost = -tf.reduce_mean(Y * tf.log(hypothesis) + (1 - Y) *
-                       tf.log(1 - hypothesis))
+         [ 1.]
+         [ 1.]]
+        Accuracy:  0.642951
+        '''
 
-train = tf.train.GradientDescentOptimizer(learning_rate=0.01).minimize(cost)
-
-# Accuracy computation
-# True if hypothesis>0.5 else False
-predicted = tf.cast(hypothesis > 0.5, dtype=tf.float32)
-accuracy = tf.reduce_mean(tf.cast(tf.equal(predicted, Y), dtype=tf.float32))
-
-# Launch graph
-with tf.Session() as sess:
-    # Initialize TensorFlow variables
-    sess.run(tf.global_variables_initializer())
-
-    for step in range(10001):
-        cost_val, _ = sess.run([cost, train], feed_dict={X: x_data, Y: y_data})
-        if step % 200 == 0:
-            print(step, cost_val)
-
-    # Accuracy report
-    h, c, a = sess.run([hypothesis, predicted, accuracy],
-                       feed_dict={X: x_data, Y: y_data})
-    print("\nHypothesis: ", h, "\nCorrect (Y): ", c, "\nAccuracy: ", a)
-
-'''
-0 0.82794
-200 0.755181
-400 0.726355
-600 0.705179
-800 0.686631
-...
-9600 0.492056
-9800 0.491396
-10000 0.490767
-
-...
-
- [ 1.]
- [ 1.]
- [ 1.]]
-Accuracy:  0.762846
-'''
+gildong = XXX()
+gildong.learn_from_file('data-03-diabetes.csv', 2000, 200) #10000, 200
+gildong.test([[0.176471,0.155779,0,0,0,0.052161,-0.952178,-0.733333]])
+#gildong.print_weight()

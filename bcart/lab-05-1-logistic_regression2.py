@@ -4,7 +4,6 @@ from neural_network import NeuralNetwork
 
 class MVLogisticRegression (NeuralNetwork):
     def init(self):
-        #self.init_for_multi_variable_logistic_regression()
         self.set_placeholder(2, 1)
         self.set_weight_bias(2, 1)
         self.set_hypothesis(2)
