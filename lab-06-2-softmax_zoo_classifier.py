@@ -16,7 +16,7 @@ X = tf.placeholder(tf.float32, [None, 16])
 Y = tf.placeholder(tf.int32, [None, 1])  # 0 ~ 6
 Y_one_hot = tf.one_hot(Y, nb_classes)  # one hot
 print("one_hot", Y_one_hot)
-Y_one_hot = tf.reshape(Y_one_hot, [-1, nb_classes])
+Y_one_hot = tf.reshape(Y_one_hot, [-1, nb_classes]) #리스트 [[a],[b]] -> [a, b]
 print("reshape", Y_one_hot)
 
 W = tf.Variable(tf.random_normal([16, nb_classes]), name='weight')
@@ -40,44 +40,29 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
 
-    for step in range(2000):
+    for step in range(2001):
         sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
         if step % 100 == 0:
-            loss, acc = sess.run([cost, accuracy], feed_dict={
-                                 X: x_data, Y: y_data})
-            print("Step: {:5}\tLoss: {:.3f}\tAcc: {:.2%}".format(
-                step, loss, acc))
+            loss, acc = sess.run([cost, accuracy], feed_dict={X: x_data, Y: y_data})
+            print("Step: {:5}\tLoss: {:.3f}\tAcc: {:.2%}".format(step, loss, acc))
 
+    '''
     # Let's see if we can predict
     pred = sess.run(prediction, feed_dict={X: x_data})
     # y_data: (N,1) = flatten => (N, ) matches pred.shape
     for p, y in zip(pred, y_data.flatten()):
         print("[{}] Prediction: {} True Y: {}".format(p == int(y), p, int(y)))
+    '''
 
-'''
-Step:     0 Loss: 5.106 Acc: 37.62%
-Step:   100 Loss: 0.800 Acc: 79.21%
-Step:   200 Loss: 0.486 Acc: 88.12%
-Step:   300 Loss: 0.349 Acc: 90.10%
-Step:   400 Loss: 0.272 Acc: 94.06%
-Step:   500 Loss: 0.222 Acc: 95.05%
-Step:   600 Loss: 0.187 Acc: 97.03%
-Step:   700 Loss: 0.161 Acc: 97.03%
-Step:   800 Loss: 0.140 Acc: 97.03%
-Step:   900 Loss: 0.124 Acc: 97.03%
-Step:  1000 Loss: 0.111 Acc: 97.03%
-Step:  1100 Loss: 0.101 Acc: 99.01%
-Step:  1200 Loss: 0.092 Acc: 100.00%
-Step:  1300 Loss: 0.084 Acc: 100.00%
-...
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 3 True Y: 3
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 0 True Y: 0
-[True] Prediction: 3 True Y: 3
-[True] Prediction: 3 True Y: 3
-[True] Prediction: 0 True Y: 0
-'''
+    '''
+    Step:  1100	Loss: 0.101	Acc: 99.01%
+    Step:  1200	Loss: 0.092	Acc: 100.00%
+    Step:  1300	Loss: 0.084	Acc: 100.00%
+    Step:  1400	Loss: 0.078	Acc: 100.00%
+    Step:  1500	Loss: 0.072	Acc: 100.00%
+    Step:  1600	Loss: 0.068	Acc: 100.00%
+    Step:  1700	Loss: 0.064	Acc: 100.00%
+    Step:  1800	Loss: 0.060	Acc: 100.00%
+    Step:  1900	Loss: 0.057	Acc: 100.00%
+    Step:  2000	Loss: 0.054	Acc: 100.00%
+    '''
