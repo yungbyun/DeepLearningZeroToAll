@@ -8,7 +8,7 @@ class XXX (NeuralNetwork):
         self.set_placeholder(4, 3)
         self.set_weight_bias(4, 3)
         self.set_hypothesis(3)
-        self.set_cost_function(3)
+        self.set_cost_function(3) #softmax
         self.set_optimizer(0.1)
 
         '''
