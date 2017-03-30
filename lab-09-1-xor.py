@@ -2,6 +2,8 @@
 # This example does not work
 import tensorflow as tf
 import numpy as np
+
+
 tf.set_random_seed(777)  # for reproducibility
 
 x_data = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=np.float32)
@@ -35,13 +37,14 @@ with tf.Session() as sess:
     for step in range(10001):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
         if step % 100 == 0:
-            print(step, sess.run(cost, feed_dict={
-                  X: x_data, Y: y_data}), sess.run(W))
+            print(step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run(W))
 
     # Accuracy report
     h, c, a = sess.run([hypothesis, predicted, accuracy],
                        feed_dict={X: x_data, Y: y_data})
     print("\nHypothesis: ", h, "\nCorrect: ", c, "\nAccuracy: ", a)
+
+
 
 '''
 Hypothesis:  [[ 0.5]

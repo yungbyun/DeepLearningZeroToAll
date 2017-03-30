@@ -1,14 +1,15 @@
 # Lab 6 Softmax Classifier
 from softmax_classifier import SoftMaxClassifier
+from mytype import MyType
 
 
 class XXX (SoftMaxClassifier):
-    def init(self):
+    def init_network(self):
         self.set_placeholder(16, 1)
         self.set_one_hot(7) #class number
         self.set_weight_bias(16, 7)
-        self.set_hypothesis(3)
-        self.set_cost_function(4)
+        self.set_hypothesis(MyType.SOFTMAX)
+        self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(0.1)
 
         '''

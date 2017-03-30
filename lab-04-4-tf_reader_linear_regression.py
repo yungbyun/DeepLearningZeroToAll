@@ -2,7 +2,7 @@
 # https://www.tensorflow.org/programmers_guide/reading_data
 
 import tensorflow as tf
-from neural_network import NeuralNetwork
+from regression import Regression
 
 
 tf.set_random_seed(777)  # for reproducibility

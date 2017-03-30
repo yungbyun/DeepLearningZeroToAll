@@ -1,22 +1,23 @@
 # Lab 4 Multi-variable linear regression
 import tensorflow as tf
 
-from neural_network import NeuralNetwork
+from regression import Regression
+from mytype import MyType
 
-
-class MVLinearRegression (NeuralNetwork):
-    def init(self):
+class MVLinearRegression (Regression):
+    def init_network(self):
         self.set_placeholder(3, 1)
         self.set_weight_bias(3, 1)
-        self.set_hypothesis(1)
-        self.set_cost_function(1)
+        self.set_hypothesis(MyType.LINEAR)
+        self.set_cost_function(MyType.LINEAR)
         self.set_optimizer(l_rate=1e-5)
 
+    '''
     def my_log(self, x_data, y_data):
         cost_val, hy_val = self.sess.run([self.cost_function, self.hypothesis], feed_dict={self.X: x_data, self.Y: y_data})
         str = 'Error: {}, Answer: {}'.format(cost_val, hy_val)
         self.logs.append(str)
-
+    '''
     '''
     [73.0, 80.0, 75.0]
     [93.0, 88.0, 93.0]

@@ -1,20 +1,20 @@
 # Lab 4 Multi-variable linear regression
 from bcart.backup.linear_regression import LinearRegression
-
+from mytype import MyType
 
 class LinearRegressionFromFile (LinearRegression):
-    def init(self):
+    def init_network(self):
         #x_col = len(x_data[0])
         #y_col = len(y_data[0])
         #print(x_col, y_col) # 3, 1
 
         self.set_placeholder(3, 1)
         self.set_weight_bias(3, 1)
-        self.set_hypothesis(1)
-        self.set_cost_function(1)
+        self.set_hypothesis(MyType.LINEAR)
+        self.set_cost_function(MyType.LINEAR)
         self.set_optimizer(l_rate=1e-5)
 
-    def my_log(self, x_data, y_data):
+    def my_log(self, i, x_data, y_data):
         pass
 
     '''

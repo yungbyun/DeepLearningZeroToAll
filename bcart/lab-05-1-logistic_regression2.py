@@ -1,16 +1,17 @@
 # Lab 5 Logistic Regression Classifier
-from neural_network import NeuralNetwork
+from regression import Regression
+from mytype import MyType
 
 
-class MVLogisticRegression (NeuralNetwork):
-    def init(self):
+class MVLogisticRegression (Regression):
+    def init_network(self):
         self.set_placeholder(2, 1)
         self.set_weight_bias(2, 1)
-        self.set_hypothesis(2)
-        self.set_cost_function(2)
+        self.set_hypothesis(MyType.LOGISTIC)
+        self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(l_rate=0.1)
 
-    def my_log(self, x_data, y_data):
+    def my_log(self, i, x_data, y_data):
         pass
 
     '''

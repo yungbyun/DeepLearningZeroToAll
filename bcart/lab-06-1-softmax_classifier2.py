@@ -1,14 +1,14 @@
 # Lab 6 Softmax Classifier
 import tensorflow as tf
-from neural_network import NeuralNetwork
+from regression import Regression
+from mytype import MyType
 
-
-class XXX (NeuralNetwork):
-    def init(self):
+class XXX (Regression):
+    def init_network(self):
         self.set_placeholder(4, 3)
         self.set_weight_bias(4, 3)
-        self.set_hypothesis(3)
-        self.set_cost_function(3) #softmax
+        self.set_hypothesis(MyType.SOFTMAX)
+        self.set_cost_function(MyType.SOFTMAX) #softmax
         self.set_optimizer(0.1)
 
         '''

@@ -1,7 +1,7 @@
-from neural_network import NeuralNetwork
+from regression import Regression
 
 
-class LinearRegression (NeuralNetwork):
+class LinearRegression (Regression):
     pass
 
 
