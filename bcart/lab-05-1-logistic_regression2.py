@@ -1,15 +1,15 @@
 # Lab 5 Logistic Regression Classifier
-from regression import Regression
+from neural_network import NeuralNetwork
 from mytype import MyType
 
 
-class MVLogisticRegression (Regression):
+class MVLogisticRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
-        self.set_weight_bias(2, 1)
-        self.set_hypothesis(MyType.LOGISTIC)
+        W, b, output = self.create_layer(None, 2, 1, MyType.LOGISTIC)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LOGISTIC)
-        self.set_optimizer(l_rate=0.1)
+        self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=0.1)
 
     def my_log(self, i, x_data, y_data):
         pass
@@ -46,7 +46,6 @@ y_data = [[0],
           [1]]
 
 gildong.learn(x_data, y_data, 5000, 200);
-#gildong.show_error()
-#gildong.print_weight()
-gildong.test(x_data)
-#gildong.recognition_rate(x_data, y_data)
+gildong.show_error()
+gildong.test_sigmoid(x_data)
+gildong.evaluate_sigmoid(x_data, y_data)

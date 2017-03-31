@@ -1,13 +1,13 @@
 # Lab 7 Learning rate and Evaluation
-from mnist_classifier import MnistClassifier
+from mnist_classifier_del import MnistClassifier
 from mytype import MyType
+from mnist_neural_network import MnistNeuralNetwork
 
-
-class XXX (MnistClassifier):
+class XXX (MnistNeuralNetwork):
     def init_network (self):
         self.set_placeholder(784, 10) #28 * 28 = 784, 0~9 digits -> num_of_input, num_of_neuron
-        self.set_weight_bias(784, 10)
-        self.set_hypothesis(MyType.SOFTMAX)
+        W, b, output = self.create_layer(None, 784, 10, MyType.SOFTMAX)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.SOFTMAX)
         self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
@@ -20,11 +20,27 @@ gildong = XXX()
 gildong.learn(15, 100)
 gildong.classify_random_image()
 gildong.evaluate()
-#gildong.show_errors()
 gildong.print_log()
-gildong.show_errors()
+gildong.show_error()
 
-
+'''
+Recognition rate : 0.896
+Error in epoch = 2.827615572
+Error in epoch = 1.061562471
+Error in epoch = 0.837592054
+Error in epoch = 0.733635712
+Error in epoch = 0.670395139
+Error in epoch = 0.625074675
+Error in epoch = 0.590520532
+Error in epoch = 0.564253636
+Error in epoch = 0.541424411
+Error in epoch = 0.522518319
+Error in epoch = 0.506355120
+Error in epoch = 0.492517450
+Error in epoch = 0.479899605
+Error in epoch = 0.469007378
+Error in epoch = 0.459114127
+'''
 
 '''
 Error in epoch = 2.827615563

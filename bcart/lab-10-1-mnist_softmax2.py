@@ -3,16 +3,16 @@ import tensorflow as tf
 import random
 # import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
-from softmax import Softmax
+from softmax_del import Softmax
 from mytype import MyType
-from mnist_classifier import MnistClassifier
+from mnist_classifier_del import MnistClassifier
+from mnist_neural_network import MnistNeuralNetwork
 
-
-class XXX (MnistClassifier):
+class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
-        self.set_weight_bias(784, 10)
-        self.set_hypothesis(MyType.LOGITS)
+        W, b, logits = self.create_layer(None, 784, 10, MyType.LINEAR)  # for logits
+        self.set_hypothesis(logits)
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
 
@@ -21,7 +21,7 @@ gildong = XXX()
 gildong.learn(15, 100)
 gildong.classify_random_image()
 gildong.evaluate()
-gildong.show_errors()
+gildong.show_error()
 
 
 '''

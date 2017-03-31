@@ -1,18 +1,16 @@
 # Lab 4 Multi-variable linear regression
-from bcart.backup.linear_regression import LinearRegression
+
 from mytype import MyType
+from neural_network import NeuralNetwork
 
-class LinearRegressionFromFile (LinearRegression):
+
+class LinearRegressionFromFile (NeuralNetwork):
     def init_network(self):
-        #x_col = len(x_data[0])
-        #y_col = len(y_data[0])
-        #print(x_col, y_col) # 3, 1
-
         self.set_placeholder(3, 1)
-        self.set_weight_bias(3, 1)
-        self.set_hypothesis(MyType.LINEAR)
+        W, b, output = self.create_layer(None, 3, 1, MyType.LINEAR)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LINEAR)
-        self.set_optimizer(l_rate=1e-5)
+        self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=1e-5)
 
     def my_log(self, i, x_data, y_data):
         pass
@@ -31,8 +29,7 @@ class LinearRegressionFromFile (LinearRegression):
     '''
 
 gildong = LinearRegressionFromFile()
-gildong.learn_from_file('data-01-test-score.csv', 2000, 10)
-gildong.test([[100, 70, 101]])
-#gildong.test([[60, 70, 110], [90, 100, 80]])
-
+gildong.learn_with_file('data-01-test-score.csv', 2000, 10)
+gildong.test_linear([[100, 70, 101]])
+gildong.test_linear([[60, 70, 110], [90, 100, 80]])
 

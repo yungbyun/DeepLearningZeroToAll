@@ -2,14 +2,18 @@
 import tensorflow as tf
 from regression import Regression
 from mytype import MyType
+from neural_network import NeuralNetwork
 
-class XXX (Regression):
+
+class XXX (NeuralNetwork):
+    Y_one_hot = None
+
     def init_network(self):
         self.set_placeholder(4, 3)
-        self.set_weight_bias(4, 3)
-        self.set_hypothesis(MyType.SOFTMAX)
+        W, b, out = self.create_layer(None, 4, 3, MyType.SOFTMAX)
+        self.set_hypothesis(out)
         self.set_cost_function(MyType.SOFTMAX) #softmax
-        self.set_optimizer(0.1)
+        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
         '''
         [1, 11, 7, 9]
@@ -41,8 +45,6 @@ y_data = [[0, 0, 1],
 
 gildong = XXX()
 gildong.learn(x_data, y_data, 2000, 200)
-gildong.test_argmax([[1, 11, 7, 9]])
-gildong.test_argmax([[1, 3, 4, 3]])
-gildong.test_argmax([[1, 1, 0, 1]])
+gildong.test_sigmoid([[1, 11, 7, 9]])
 gildong.test_argmax([[1, 11, 7, 9], [1, 3, 4, 3], [1, 1, 0, 1]])
-
+gildong.evaluate_sigmoid(x_data, y_data)

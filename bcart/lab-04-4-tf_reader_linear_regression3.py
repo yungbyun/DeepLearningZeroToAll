@@ -1,16 +1,16 @@
 # Lab 4 Multi-variable linear regression
 # https://www.tensorflow.org/programmers_guide/reading_data
-
-from regression import Regression
 from mytype import MyType
+from neural_network import NeuralNetwork
 
-class LinearRegressionFromFiles (Regression):
+
+class LinearRegressionFromFiles (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(3, 1)
-        self.set_weight_bias(3, 1)
-        self.set_hypothesis(MyType.LINEAR)
+        W, b, output = self.create_layer(None, 3, 1, MyType.LINEAR)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LINEAR)
-        self.set_optimizer(l_rate=1e-5)
+        self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=1e-5)
 
     def my_log(self, i, x_data, y_data):
         pass
@@ -24,6 +24,6 @@ class LinearRegressionFromFiles (Regression):
     '''
 
 gildong = LinearRegressionFromFiles()
-gildong.learn_batch(['data-01-test-score.csv', 'data-01-test-score.csv'], 2000, 200)
-gildong.test([[60, 70, 110], [90, 100, 80]])
+gildong.learn_with_files(['data-01-test-score.csv', 'data-01-test-score.csv'], 2000, 200)
+gildong.test_linear([[60, 70, 110], [90, 100, 80]])
 

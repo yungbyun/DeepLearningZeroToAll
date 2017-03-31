@@ -1,14 +1,15 @@
 # Lab 5 Logistic Regression Classifier
-from regression import Regression
+from neural_network import NeuralNetwork
 from mytype import MyType
 
-class XXX (Regression):
+
+class XXX (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(8, 1)
-        self.set_weight_bias(8, 1)
-        self.set_hypothesis(MyType.LOGISTIC)
+        W, b, output = self.create_layer(None, 8, 1, MyType.LOGISTIC)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LOGISTIC)
-        self.set_optimizer(l_rate=0.01)
+        self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=0.01)
 
     def my_log(self, i, x_data, y_data):
         pass
@@ -39,6 +40,10 @@ class XXX (Regression):
         '''
 
 gildong = XXX()
-gildong.learn_from_file('data-03-diabetes.csv', 2000, 200) #10000, 200
-gildong.test([[0.176471,0.155779,0,0,0,0.052161,-0.952178,-0.733333]])
-#gildong.print_weight()
+gildong.learn_with_file('data-03-diabetes.csv', 2000, 200) #10000, 200
+gildong.test_sigmoid([[0.176471,0.155779,0,0,0,0.052161,-0.952178,-0.733333]])
+from file2buffer import File2Buffer
+f2b = File2Buffer()
+f2b.file_load('data-03-diabetes.csv')
+gildong.evaluate_sigmoid(f2b.x_data, f2b.y_data)
+gildong.show_error()

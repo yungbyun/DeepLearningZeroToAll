@@ -2,15 +2,15 @@
 import tensorflow as tf
 from regression import Regression
 from mytype import MyType
+from neural_network import NeuralNetwork
 
-
-class MVLogisticRegression (Regression):
+class MVLogisticRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
-        self.set_weight_bias(2, 1)
-        self.set_hypothesis(MyType.LOGISTIC) #logistic
+        W, b, output = self.create_layer(None, 2, 1, MyType.LOGISTIC)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LOGISTIC) #logistic
-        self.set_optimizer(0.1)
+        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
 
 x_data = [[1, 2],
@@ -28,7 +28,8 @@ y_data = [[0],
 
 gildong = MVLogisticRegression()
 gildong.learn(x_data, y_data, 4000, 100)
-gildong.test(x_data)
+gildong.evaluate_sigmoid(x_data, y_data)
+gildong.test_sigmoid([[6, 3]])
 
 '''
 [1, 2]

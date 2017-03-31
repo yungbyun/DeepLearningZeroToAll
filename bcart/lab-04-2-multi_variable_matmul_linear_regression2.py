@@ -3,14 +3,16 @@ import tensorflow as tf
 
 from regression import Regression
 from mytype import MyType
+from neural_network import NeuralNetwork
 
-class MVLinearRegression (Regression):
+
+class MVLinearRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(3, 1)
-        self.set_weight_bias(3, 1)
-        self.set_hypothesis(MyType.LINEAR)
+        W, b, output = self.create_layer(None, 3, 1, MyType.LINEAR)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.LINEAR)
-        self.set_optimizer(l_rate=1e-5)
+        self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=1e-5)
 
     '''
     def my_log(self, x_data, y_data):
@@ -45,10 +47,6 @@ y_dat = [[152.],
 
 gildong = MVLinearRegression()
 gildong.learn(x_dat, y_dat, 2000, 40)
-#gildong.print_log()
-#gildong.show_bias()
-#gildong.show_error()
-gildong.test(x_dat)
-#gildong.print_weight()
-
+gildong.print_log()
+gildong.show_error()
 

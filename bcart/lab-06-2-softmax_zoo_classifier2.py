@@ -7,10 +7,11 @@ class XXX (SoftMaxClassifier):
     def init_network(self):
         self.set_placeholder(16, 1)
         self.set_one_hot(7) #class number
-        self.set_weight_bias(16, 7)
-        self.set_hypothesis(MyType.SOFTMAX)
+        W, b, output = self.create_layer(None, 16, 7, MyType.SOFTMAX)
+        #self.set_weight_bias(16, 7)
+        self.set_hypothesis(output)
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
-        self.set_optimizer(0.1)
+        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
         '''
         ex) 0,0,1,0,0, 1,1,1,1,0, 0,1,0,1,0, 0,      3
@@ -27,7 +28,7 @@ class XXX (SoftMaxClassifier):
 gildong = XXX()
 x_data, y_data = gildong.load_file('data-04-zoo.csv')
 #gildong.learn(x_data, y_data, 2000, 100)
-gildong.learn_from_file('data-04-zoo.csv', 2000, 100)
+gildong.learn_with_file('data-04-zoo.csv', 2000, 100)
 gildong.test_argmax([[0,0,1,0,0, 1,1,1,1,0, 0,1,0,1,0, 0]])
-gildong.recognition_rate(x_data, y_data)
+#gildong.recognition_rate(x_data, y_data)
 #gildong.show_error()
