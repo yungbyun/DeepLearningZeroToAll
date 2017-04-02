@@ -41,8 +41,7 @@ W2 = tf.Variable(tf.random_normal([3, 3, 32, 64], stddev=0.01))
 #    Pool      ->(?, 7, 7, 64)
 L2 = tf.nn.conv2d(L1, W2, strides=[1, 1, 1, 1], padding='SAME')
 L2 = tf.nn.relu(L2)
-L2 = tf.nn.max_pool(L2, ksize=[1, 2, 2, 1],
-                    strides=[1, 2, 2, 1], padding='SAME')
+L2 = tf.nn.max_pool(L2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 L2 = tf.reshape(L2, [-1, 7 * 7 * 64])
 '''
 Tensor("Conv2D_1:0", shape=(?, 14, 14, 64), dtype=float32)
@@ -52,14 +51,12 @@ Tensor("Reshape_1:0", shape=(?, 3136), dtype=float32)
 '''
 
 # Final FC 7x7x64 inputs -> 10 outputs
-W3 = tf.get_variable("W3", shape=[7 * 7 * 64, 10],
-                     initializer=tf.contrib.layers.xavier_initializer())
+W3 = tf.get_variable("W3", shape=[7 * 7 * 64, 10], initializer=tf.contrib.layers.xavier_initializer())
 b = tf.Variable(tf.random_normal([10]))
 hypothesis = tf.matmul(L2, W3) + b
 
 # define cost/loss & optimizer
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
-    logits=hypothesis, labels=Y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=hypothesis, labels=Y))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 # initialize

@@ -4,6 +4,8 @@ import random
 # import matplotlib.pyplot as plt
 
 from tensorflow.examples.tutorials.mnist import input_data
+from mnist_neural_network import MnistNeuralNetwork
+from mytype import MyType
 
 tf.set_random_seed(777)  # reproducibility
 
@@ -13,7 +15,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # parameters
 learning_rate = 0.001
-training_epochs = 15
+training_epochs = 3 #15
 batch_size = 100
 
 # input place holders
@@ -87,22 +89,15 @@ print("Prediction: ", sess.run(
 #           reshape(28, 28), cmap='Greys', interpolation='nearest')
 # plt.show()
 
+
+
+
 '''
-Epoch: 0001 cost = 0.266061549
-Epoch: 0002 cost = 0.080796588
-Epoch: 0003 cost = 0.049075800
-Epoch: 0004 cost = 0.034772298
-Epoch: 0005 cost = 0.024780529
-Epoch: 0006 cost = 0.017072763
-Epoch: 0007 cost = 0.014031383
-Epoch: 0008 cost = 0.013763446
-Epoch: 0009 cost = 0.009164047
-Epoch: 0010 cost = 0.008291388
-Epoch: 0011 cost = 0.007319742
-Epoch: 0012 cost = 0.006434021
-Epoch: 0013 cost = 0.005684378
-Epoch: 0014 cost = 0.004781207
-Epoch: 0015 cost = 0.004342310
+Epoch: 0001 cost = 0.329985125
+Epoch: 0002 cost = 0.109935446
+Epoch: 0003 cost = 0.073520600
 Learning Finished!
-Accuracy: 0.9742
+Accuracy: 0.9724
+Label:  [3]
+Prediction:  [3]
 '''

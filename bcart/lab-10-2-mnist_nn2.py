@@ -17,7 +17,7 @@ class XXX (MnistNeuralNetwork):
 gildong = XXX()
 gildong.learn(15, 100)
 gildong.evaluate()
-gildong.classify_random_image()
+gildong.classify_mnist_image_random()
 gildong.show_error()
 
 '''
