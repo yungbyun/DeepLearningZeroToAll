@@ -1,12 +1,16 @@
 # Lab 5 Logistic Regression Classifier
 from neural_network import NeuralNetwork
 from mytype import MyType
-
+import tensorflow as tf
+from file2buffer import File2Buffer
 
 class XXX (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(8, 1)
-        W, b, output = self.create_layer(None, 8, 1, MyType.LOGISTIC)
+
+        output = self.create_layer(self.X, 8, 1, MyType.LOGISTIC, 'Wa', 'ba')
+        output = tf.sigmoid(output)
+
         self.set_hypothesis(output)
         self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=0.01)
@@ -42,7 +46,7 @@ class XXX (NeuralNetwork):
 gildong = XXX()
 gildong.learn_with_file('data-03-diabetes.csv', 2000, 200) #10000, 200
 gildong.test_sigmoid([[0.176471,0.155779,0,0,0,0.052161,-0.952178,-0.733333]])
-from file2buffer import File2Buffer
+
 f2b = File2Buffer()
 f2b.file_load('data-03-diabetes.csv')
 gildong.evaluate_sigmoid(f2b.x_data, f2b.y_data)

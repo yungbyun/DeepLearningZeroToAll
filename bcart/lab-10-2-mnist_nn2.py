@@ -1,23 +1,31 @@
 # Lab 10 MNIST and NN
 from mytype import MyType
 from mnist_neural_network import MnistNeuralNetwork
-
+import tensorflow as tf
 
 class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
-        Wa, ba, outputa = self.create_layer(None, 784, 256, MyType.RELU)
-        Wb, bb, outputb = self.create_layer(outputa, 256, 256, MyType.RELU)
-        Wc, bc,    hypo = self.create_layer(outputb, 256, 10, MyType.LINEAR)
-        self.set_hypothesis(hypo)
+
+        #self.xavier()
+
+        L1 = self.create_layer(self.X, 784, 256, MyType.RELU, 'Wa', 'ba')
+        L1 = tf.nn.relu(L1)
+
+        L2 = self.create_layer(L1, 256, 256, MyType.RELU, 'Wb', 'bb')
+        L2 = tf.nn.relu(L2)
+
+        L3 = self.create_layer(L2, 256, 10, MyType.LINEAR, 'Wc', 'bc')
+        self.set_hypothesis(L3)
+
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
 
 
 gildong = XXX()
-gildong.learn(15, 100)
+gildong.learn_mnist(3, 100)
 gildong.evaluate()
-gildong.classify_mnist_image_random()
+gildong.classify_random()
 gildong.show_error()
 
 '''

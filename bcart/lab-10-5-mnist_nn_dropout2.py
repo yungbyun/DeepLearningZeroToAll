@@ -12,18 +12,32 @@ class XXX (DropoutMnistNeuralNetwork):
 
     def init_network(self):
         self.set_placeholder(784, 10)
-        output_a = self.create_input_layer(784, 512, 'Wa')
-        output_b = self.create_hidden_layer(output_a, 512, 512, 'Wb')
-        output_c = self.create_hidden_layer(output_b, 512, 512, 'Wc')
-        output_d = self.create_hidden_layer(output_c, 512, 512, 'Wd')
-        hypo = self.create_output_layer(output_d, 512, 10, 'We')
+
+        L1 = self.fully_connected_layer(self.X, 784, 512, 'Wa')
+        L1 = tf.nn.relu(L1)  # X
+        L1 = tf.nn.dropout(L1, keep_prob = self.D)
+
+        L2 = self.fully_connected_layer(L1, 512, 512, 'Wb')
+        L2 = tf.nn.relu(L2)
+        L2 = tf.nn.dropout(L2, keep_prob = self.D)
+
+        L3 = self.fully_connected_layer(L2, 512, 512, 'Wc')
+        L3 = tf.nn.relu(L3)
+        L3 = tf.nn.dropout(L3, keep_prob = self.D)
+
+        L4 = self.fully_connected_layer(L3, 512, 512, 'Wd')
+        L4 = tf.nn.relu(L4)
+        L4 = tf.nn.dropout(L4, keep_prob = self.D)
+
+        hypo = self.fully_connected_layer(L4, 512, 10, 'We')
         self.set_hypothesis(hypo)
+
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
 
 
 gildong = XXX()
-gildong.learn_mnist(15, 100)
+gildong.learn_mnist(1, 100)
 gildong.evaluate()
 gildong.classify_random()
 

@@ -137,8 +137,8 @@ for m in range(num_models):
 sess.run(tf.global_variables_initializer())
 
 # train my model
+avg_cost_list = np.zeros(len(models)) #아래 for 루프 안에 있었는데 여기로 옮김.
 for epoch in range(training_epochs):
-    avg_cost_list = np.zeros(len(models))
     total_batch = int(mnist.train.num_examples / batch_size)
     for i in range(total_batch):
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)

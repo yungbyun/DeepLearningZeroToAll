@@ -11,17 +11,19 @@ from mnist_neural_network import MnistNeuralNetwork
 class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
-        W, b, logits = self.create_layer(None, 784, 10, MyType.LINEAR)  # for logits
-        self.set_hypothesis(logits)
+
+        L = self.create_layer(self.X, 784, 10, MyType.LINEAR, 'Wa', 'ba')  # for logits
+
+        self.set_hypothesis(L)
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
 
 
 gildong = XXX()
-gildong.learn(15, 100)
-gildong.classify()
+gildong.learn_mnist(15, 100)
 gildong.evaluate()
-gildong.show_error()
+#gildong.classify_random()
+#gildong.show_error()
 
 
 '''

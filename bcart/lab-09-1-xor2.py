@@ -9,9 +9,13 @@ from neural_network import NeuralNetwork
 class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
-        W, b, output = self.create_layer(None, 2, 1, MyType.LOGISTIC)
+
+        L = self.create_layer(self.X, 2, 1, MyType.LOGISTIC, 'Wa', 'ba')
+        L = tf.nn.sigmoid(L)
+
         #self.set_weight_bias(2, 1)
-        self.set_hypothesis(output)
+        self.set_hypothesis(L)
+
         self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 

@@ -9,7 +9,9 @@ from neural_network import NeuralNetwork
 class MVLinearRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(3, 1)
-        W, b, output = self.create_layer(None, 3, 1, MyType.LINEAR)
+
+        output = self.create_layer(self.X, 3, 1, MyType.LINEAR, 'W', 'b')
+
         self.set_hypothesis(output)
         self.set_cost_function(MyType.LINEAR)
         self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=1e-5)
@@ -47,6 +49,8 @@ y_dat = [[152.],
 
 gildong = MVLinearRegression()
 gildong.learn(x_dat, y_dat, 2000, 40)
-gildong.print_log()
+#gildong.print_log()
+gildong.test_linear(x_dat)
 gildong.show_error()
+
 

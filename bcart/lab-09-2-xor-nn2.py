@@ -3,14 +3,20 @@
 import numpy as np
 from mytype import MyType
 from neural_network import NeuralNetwork
-
+import tensorflow as tf
 
 class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
-        Wa, ba, output1 = self.create_layer(None, 2, 2, MyType.LOGISTIC, 'weight_a', 'bias_a')
-        Wb, bb, hypo = self.create_layer(output1, 2, 1, MyType.LOGISTIC, 'weight_b', 'bias_b')
-        self.set_hypothesis(hypo)
+
+        L1 = self.create_layer(self.X, 2, 2, MyType.LOGISTIC, 'weight_a', 'bias_a')
+        L1 = tf.sigmoid(L1)
+
+        L2 = self.create_layer(L1, 2, 1, MyType.LOGISTIC, 'weight_b', 'bias_b')
+        L2 = tf.sigmoid(L2)
+
+        self.set_hypothesis(L2)
+
         self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
@@ -22,8 +28,8 @@ gildong  = XXX()
 xdata = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=np.float32)
 ydata = np.array([[0], [1], [1], [0]], dtype=np.float32)
 gildong.learn(xdata, ydata, 10000, 100)
-gildong.test_sigmoid([[0, 1], [1, 0]])
 gildong.evaluate_sigmoid(xdata, ydata)
+gildong.test_sigmoid([[0, 1], [1, 0]])
 gildong.show_error()
 
 

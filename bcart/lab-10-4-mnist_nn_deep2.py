@@ -18,14 +18,27 @@ Hypothesis: Softmax, cf) One-hot encoding (argmax)
 Cost function: Cross-Entropy, D(H,Y)
 Optimizer: ADAM
 '''
+
+
 class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
-        Wa, ba, output_a = self.create_layer(None, 784, 512, MyType.RELU, 'weight_a', 'bias_a')
-        Wb, bb, output_b = self.create_layer(output_a, 512, 512, MyType.RELU, 'weight_b', 'bias_b')
-        Wc, bc, output_c = self.create_layer(output_b, 512, 512, MyType.RELU, 'weight_c', 'bias_c')
-        Wd, bd, output_d = self.create_layer(output_c, 512, 512, MyType.RELU, 'weight_d', 'bias_d')
-        We, be, hypo = self.create_layer(output_d, 512, 10, MyType.LINEAR, 'weight_e', 'bias_e')
+
+        L1 = self.create_layer(self.X, 784, 512, MyType.RELU, 'weight_a', 'bias_a')
+        L1 = tf.nn.relu(L1)
+
+        L2 = self.create_layer(L1, 512, 512, MyType.RELU, 'weight_b', 'bias_b')
+        L2 = tf.nn.relu(L2)
+
+        L3 = self.create_layer(L2, 512, 512, MyType.RELU, 'weight_c', 'bias_c')
+        L3 = tf.nn.relu(L3)
+
+        L4 = self.create_layer(L3, 512, 512, MyType.RELU, 'weight_d', 'bias_d')
+        L4 = tf.nn.relu(L4)
+
+        hypo = self.create_layer(L4, 512, 10, MyType.LINEAR, 'weight_e', 'bias_e')
+
+
         self.set_hypothesis(hypo)
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
@@ -35,10 +48,10 @@ class XXX (MnistNeuralNetwork):
 
 
 gildong = XXX()
-gildong.learn_mnist(15, 100)
+gildong.learn_mnist(1, 100)
 gildong.evaluate()
-gildong.classify_random()
-gildong.show_error()
+#gildong.classify_random()
+#gildong.show_error()
 
 
 '''

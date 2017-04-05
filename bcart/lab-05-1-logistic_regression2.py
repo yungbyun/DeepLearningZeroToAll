@@ -1,12 +1,16 @@
 # Lab 5 Logistic Regression Classifier
 from neural_network import NeuralNetwork
 from mytype import MyType
+import tensorflow as tf
 
 
 class MVLogisticRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
-        W, b, output = self.create_layer(None, 2, 1, MyType.LOGISTIC)
+
+        output = self.create_layer(self.X, 2, 1, MyType.LOGISTIC, 'Wa', 'ba')
+        output = tf.sigmoid(output)
+
         self.set_hypothesis(output)
         self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(MyType.GRADIENTDESCENT, l_rate=0.1)

@@ -23,8 +23,10 @@ class XXX (MnistCNN):
         CL_b = self.relu(CL_b)
         CL_b_maxp = self.max_pooling(CL_b, 2, 2, 2, 2)
 
-        hypo = self.output_layer(CL_b_maxp, 7*7*64, 10, 'output_l')
+        reshaped = tf.reshape(CL_b_maxp, [-1, 7*7*64])
+        hypo = self.fully_connected_layer(reshaped, 7*7*64, 10, 'input_l')
         self.set_hypothesis(hypo)
+
         self.set_cost_function()
         self.set_optimizer(0.001)
 

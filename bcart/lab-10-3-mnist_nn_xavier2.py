@@ -16,10 +16,16 @@ class XXX (MnistNeuralNetwork):
 
     def init_network(self):
         self.set_placeholder(784, 10)
-        Wa, ba, output_a = self.create_layer(None, 784, 256, MyType.RELU, 'weight_a', 'bias_a')
-        Wb, bb, output_b = self.create_layer(output_a, 256, 256, MyType.RELU, 'weight_b', 'bias_b')
-        Wc, bc, hypothesis = self.create_layer(output_b, 256, 10, MyType.LINEAR, 'weight_c', 'bias_c')
-        self.set_hypothesis(hypothesis)
+
+        L1 = self.create_layer(self.X, 784, 256, MyType.RELU, 'weight_a', 'bias_a')
+        L1 = tf.nn.relu(L1)
+
+        L2 = self.create_layer(L1, 256, 256, MyType.RELU, 'weight_b', 'bias_b')
+        L2 = tf.nn.relu(L2)
+
+        L3 = self.create_layer(L2, 256, 10, MyType.LINEAR, 'weight_c', 'bias_c')
+        self.set_hypothesis(L3)
+
         self.set_cost_function(MyType.SOFTMAX_LOGITS)
         self.set_optimizer(MyType.ADAM, 0.001)
 

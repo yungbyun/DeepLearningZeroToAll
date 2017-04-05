@@ -8,11 +8,21 @@ from mytype import MyType
 class XXX (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
-        Wa, ba, output1 = self.create_layer(None, 2, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # input
-        Wb, bb, output2 = self.create_layer(output1, 10, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # hidden1
-        Wc, bc, output3 = self.create_layer(output2, 10, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # hidden2
-        Wd, bd, hypothesis = self.create_layer(output3, 10, 1, MyType.LOGISTIC, 'weight_a', 'bias_a')  # output
-        self.set_hypothesis(hypothesis)
+
+        L1 = self.create_layer(self.X, 2, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # input
+        L1 = tf.sigmoid(L1)
+
+        L2 = self.create_layer(L1, 10, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # hidden1
+        L2 = tf.sigmoid(L2)
+
+        L3 = self.create_layer(L2, 10, 10, MyType.LOGISTIC, 'weight_a', 'bias_a')  # hidden2
+        L3 = tf.sigmoid(L3)
+
+        L4 = self.create_layer(L3, 10, 1, MyType.LOGISTIC, 'weight_a', 'bias_a')  # output
+        L4 = tf.sigmoid(L4)
+
+        self.set_hypothesis(L4)
+
         self.set_cost_function(MyType.LOGISTIC)
         self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
@@ -21,8 +31,9 @@ gildong = XXX()
 xdata = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=np.float32)
 ydata = np.array([[0], [1], [1], [0]], dtype=np.float32)
 gildong.learn(xdata, ydata, 10000, 100)
-gildong.show_error()
 gildong.evaluate_sigmoid(xdata, ydata)
+gildong.show_error()
+
 
 '''
 Hypothesis:  [[  7.80512521e-04]
@@ -33,6 +44,6 @@ Correct:  [[ 0.]
  [ 1.]
  [ 1.]
  [ 0.]]
-Accuracy:  1.0
+Accuracy:  100.0
 
 '''

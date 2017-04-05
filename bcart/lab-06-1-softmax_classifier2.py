@@ -10,8 +10,11 @@ class XXX (NeuralNetwork):
 
     def init_network(self):
         self.set_placeholder(4, 3)
-        W, b, out = self.create_layer(None, 4, 3, MyType.SOFTMAX)
-        self.set_hypothesis(out)
+
+        logit = self.create_layer(self.X, 4, 3, MyType.SOFTMAX, 'Wa', 'ba')
+        logit = tf.nn.softmax(logit)
+
+        self.set_hypothesis(logit)
         self.set_cost_function(MyType.SOFTMAX) #softmax
         self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
 
