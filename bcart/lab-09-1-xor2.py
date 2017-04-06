@@ -3,21 +3,21 @@
 import tensorflow as tf
 import numpy as np
 from regression import Regression
-from mytype import MyType
+from nntype import NNType
 from neural_network import NeuralNetwork
 
 class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        L = self.create_layer(self.X, 2, 1, MyType.LOGISTIC, 'Wa', 'ba')
+        L = self.create_layer(self.X, 2, 1, NNType.LOGISTIC, 'Wa', 'ba')
         L = tf.nn.sigmoid(L)
 
         #self.set_weight_bias(2, 1)
         self.set_hypothesis(L)
 
-        self.set_cost_function(MyType.LOGISTIC)
-        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
+        self.set_cost_function(NNType.LOGISTIC)
+        self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
 
     def my_log(self, i, x_data, y_data):
         super().my_log(i, x_data, y_data)

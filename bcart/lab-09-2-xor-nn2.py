@@ -1,7 +1,7 @@
 # Lab 9 XOR
 # This example does not work
 import numpy as np
-from mytype import MyType
+from nntype import NNType
 from neural_network import NeuralNetwork
 import tensorflow as tf
 
@@ -9,16 +9,16 @@ class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        L1 = self.create_layer(self.X, 2, 2, MyType.LOGISTIC, 'weight_a', 'bias_a')
+        L1 = self.create_layer(self.X, 2, 2, NNType.LOGISTIC, 'weight_a', 'bias_a')
         L1 = tf.sigmoid(L1)
 
-        L2 = self.create_layer(L1, 2, 1, MyType.LOGISTIC, 'weight_b', 'bias_b')
+        L2 = self.create_layer(L1, 2, 1, NNType.LOGISTIC, 'weight_b', 'bias_b')
         L2 = tf.sigmoid(L2)
 
         self.set_hypothesis(L2)
 
-        self.set_cost_function(MyType.LOGISTIC)
-        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
+        self.set_cost_function(NNType.LOGISTIC)
+        self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
 
     def my_log(self, i, xdata, ydata):
         pass

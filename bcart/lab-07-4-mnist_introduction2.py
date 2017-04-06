@@ -1,6 +1,6 @@
 # Lab 7 Learning rate and Evaluation
 from mnist_classifier_del import MnistClassifier
-from mytype import MyType
+from nntype import NNType
 from mnist_neural_network import MnistNeuralNetwork
 import tensorflow as  tf
 
@@ -9,13 +9,13 @@ class XXX (MnistNeuralNetwork):
     def init_network (self):
         self.set_placeholder(784, 10) #28 * 28 = 784, 0~9 digits -> num_of_input, num_of_neuron
 
-        L = self.create_layer(self.X, 784, 10, MyType.SOFTMAX, 'Wa', 'ba')
+        L = self.create_layer(self.X, 784, 10, NNType.SOFTMAX, 'Wa', 'ba')
         L = tf.nn.softmax(L)
 
         self.set_hypothesis(L)
 
-        self.set_cost_function(MyType.SOFTMAX)
-        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
+        self.set_cost_function(NNType.SOFTMAX)
+        self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
 
     def epoch_process(self, avg_err, x_data, y_data):
         str = 'Error in epoch = {:.9f}'.format(avg_err)

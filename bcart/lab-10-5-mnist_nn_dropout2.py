@@ -5,7 +5,7 @@ import random
 
 from tensorflow.examples.tutorials.mnist import input_data
 from dropout_mnist_neural_network import DropoutMnistNeuralNetwork
-from mytype import MyType
+from nntype import NNType
 
 
 class XXX (DropoutMnistNeuralNetwork):
@@ -32,8 +32,8 @@ class XXX (DropoutMnistNeuralNetwork):
         hypo = self.fully_connected_layer(L4, 512, 10, 'We')
         self.set_hypothesis(hypo)
 
-        self.set_cost_function(MyType.SOFTMAX_LOGITS)
-        self.set_optimizer(MyType.ADAM, 0.001)
+        self.set_cost_function(NNType.SOFTMAX_LOGITS)
+        self.set_optimizer(NNType.ADAM, 0.001)
 
 
 gildong = XXX()

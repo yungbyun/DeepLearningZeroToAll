@@ -4,7 +4,7 @@ import random
 # import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 from softmax_del import Softmax
-from mytype import MyType
+from nntype import NNType
 from mnist_classifier_del import MnistClassifier
 from mnist_neural_network import MnistNeuralNetwork
 
@@ -12,11 +12,11 @@ class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L = self.create_layer(self.X, 784, 10, MyType.LINEAR, 'Wa', 'ba')  # for logits
+        L = self.create_layer(self.X, 784, 10, NNType.SQUARE_MEAN, 'Wa', 'ba')  # for logits
 
         self.set_hypothesis(L)
-        self.set_cost_function(MyType.SOFTMAX_LOGITS)
-        self.set_optimizer(MyType.ADAM, 0.001)
+        self.set_cost_function(NNType.SOFTMAX_LOGITS)
+        self.set_optimizer(NNType.ADAM, 0.001)
 
 
 gildong = XXX()

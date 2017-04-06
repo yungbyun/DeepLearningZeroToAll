@@ -1,6 +1,6 @@
 # Lab 2 Linear Regression
 import tensorflow as tf
-from mytype import MyType
+from nntype import NNType
 from neural_network import NeuralNetwork
 
 
@@ -12,8 +12,8 @@ class MVLogisticRegression (NeuralNetwork):
         output = tf.sigmoid(output)
 
         self.set_hypothesis(output)
-        self.set_cost_function(MyType.LOGISTIC) #logistic
-        self.set_optimizer(MyType.GRADIENTDESCENT, 0.1)
+        self.set_cost_function(NNType.LOGISTIC)
+        self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
 
 
 x_data = [[1, 2],

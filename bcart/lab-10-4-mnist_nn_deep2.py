@@ -5,7 +5,7 @@ import random
 
 from tensorflow.examples.tutorials.mnist import input_data
 from mnist_neural_network import MnistNeuralNetwork
-from mytype import MyType
+from nntype import NNType
 from mnist_neural_network import MnistNeuralNetwork
 
 
@@ -24,24 +24,24 @@ class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L1 = self.create_layer(self.X, 784, 512, MyType.RELU, 'weight_a', 'bias_a')
+        L1 = self.create_layer(self.X, 784, 512, NNType.RELU, 'weight_a', 'bias_a')
         L1 = tf.nn.relu(L1)
 
-        L2 = self.create_layer(L1, 512, 512, MyType.RELU, 'weight_b', 'bias_b')
+        L2 = self.create_layer(L1, 512, 512, NNType.RELU, 'weight_b', 'bias_b')
         L2 = tf.nn.relu(L2)
 
-        L3 = self.create_layer(L2, 512, 512, MyType.RELU, 'weight_c', 'bias_c')
+        L3 = self.create_layer(L2, 512, 512, NNType.RELU, 'weight_c', 'bias_c')
         L3 = tf.nn.relu(L3)
 
-        L4 = self.create_layer(L3, 512, 512, MyType.RELU, 'weight_d', 'bias_d')
+        L4 = self.create_layer(L3, 512, 512, NNType.RELU, 'weight_d', 'bias_d')
         L4 = tf.nn.relu(L4)
 
-        hypo = self.create_layer(L4, 512, 10, MyType.LINEAR, 'weight_e', 'bias_e')
+        hypo = self.create_layer(L4, 512, 10, NNType.SQUARE_MEAN, 'weight_e', 'bias_e')
 
 
         self.set_hypothesis(hypo)
-        self.set_cost_function(MyType.SOFTMAX_LOGITS)
-        self.set_optimizer(MyType.ADAM, 0.001)
+        self.set_cost_function(NNType.SOFTMAX_LOGITS)
+        self.set_optimizer(NNType.ADAM, 0.001)
 
     def set_weight_initializer(self):
         self.xavier()

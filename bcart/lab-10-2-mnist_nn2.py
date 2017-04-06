@@ -1,5 +1,5 @@
 # Lab 10 MNIST and NN
-from mytype import MyType
+from nntype import NNType
 from mnist_neural_network import MnistNeuralNetwork
 import tensorflow as tf
 
@@ -9,17 +9,17 @@ class XXX (MnistNeuralNetwork):
 
         #self.xavier()
 
-        L1 = self.create_layer(self.X, 784, 256, MyType.RELU, 'Wa', 'ba')
+        L1 = self.create_layer(self.X, 784, 256, NNType.RELU, 'Wa', 'ba')
         L1 = tf.nn.relu(L1)
 
-        L2 = self.create_layer(L1, 256, 256, MyType.RELU, 'Wb', 'bb')
+        L2 = self.create_layer(L1, 256, 256, NNType.RELU, 'Wb', 'bb')
         L2 = tf.nn.relu(L2)
 
-        L3 = self.create_layer(L2, 256, 10, MyType.LINEAR, 'Wc', 'bc')
+        L3 = self.create_layer(L2, 256, 10, NNType.SQUARE_MEAN, 'Wc', 'bc')
         self.set_hypothesis(L3)
 
-        self.set_cost_function(MyType.SOFTMAX_LOGITS)
-        self.set_optimizer(MyType.ADAM, 0.001)
+        self.set_cost_function(NNType.SOFTMAX_LOGITS)
+        self.set_optimizer(NNType.ADAM, 0.001)
 
 
 gildong = XXX()

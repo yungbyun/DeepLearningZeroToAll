@@ -5,7 +5,7 @@ import random
 
 from tensorflow.examples.tutorials.mnist import input_data
 from mnist_neural_network import MnistNeuralNetwork
-from mytype import MyType
+from nntype import NNType
 
 tf.set_random_seed(777)  # reproducibility
 
