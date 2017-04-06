@@ -10,7 +10,7 @@ class MVLinearRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(3, 1)
 
-        output = self.create_layer(self.X, 3, 1, MyType.LINEAR, 'W', 'b')
+        output = self.create_layer(self.X, 3, 1, 'W', 'b')
 
         self.set_hypothesis(output)
         self.set_cost_function(MyType.LINEAR)

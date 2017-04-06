@@ -1,14 +1,14 @@
 # Lab 2 Linear Regression
 import tensorflow as tf
-from regression import Regression
 from mytype import MyType
 from neural_network import NeuralNetwork
+
 
 class MVLogisticRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        output = self.create_layer(self.X, 2, 1, MyType.LOGISTIC, 'W', 'b')
+        output = self.create_layer(self.X, 2, 1, 'W', 'b')
         output = tf.sigmoid(output)
 
         self.set_hypothesis(output)
