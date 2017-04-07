@@ -15,19 +15,19 @@ class XXX (DropoutMnistNeuralNetwork):
 
         L1 = self.fully_connected_layer(self.X, 784, 512, 'Wa')
         L1 = tf.nn.relu(L1)  # X
-        L1 = tf.nn.dropout(L1, keep_prob = self.D)
+        L1 = tf.nn.dropout(L1, keep_prob = self.DO)
 
         L2 = self.fully_connected_layer(L1, 512, 512, 'Wb')
         L2 = tf.nn.relu(L2)
-        L2 = tf.nn.dropout(L2, keep_prob = self.D)
+        L2 = tf.nn.dropout(L2, keep_prob = self.DO)
 
         L3 = self.fully_connected_layer(L2, 512, 512, 'Wc')
         L3 = tf.nn.relu(L3)
-        L3 = tf.nn.dropout(L3, keep_prob = self.D)
+        L3 = tf.nn.dropout(L3, keep_prob = self.DO)
 
         L4 = self.fully_connected_layer(L3, 512, 512, 'Wd')
         L4 = tf.nn.relu(L4)
-        L4 = tf.nn.dropout(L4, keep_prob = self.D)
+        L4 = tf.nn.dropout(L4, keep_prob = self.DO)
 
         hypo = self.fully_connected_layer(L4, 512, 10, 'We')
         self.set_hypothesis(hypo)
@@ -60,4 +60,13 @@ Epoch: 0014 cost = 0.041290121
 Epoch: 0015 cost = 0.043621063
 Learning Finished!
 Accuracy: 0.9804
+
+
+Start learning:
+.
+Done!
+
+Recognition rate : 0.9514
+Label [8]
+Classified [8]
 '''

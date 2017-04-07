@@ -24,14 +24,18 @@ X = tf.placeholder(
     tf.float32, [None, sequence_length, hidden_size])  # X one-hot
 Y = tf.placeholder(tf.int32, [None, sequence_length])  # Y label
 
-cell = tf.contrib.rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+#cell = tf.contrib.rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+cell = tf.nn.rnn_cell.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+
 initial_state = cell.zero_state(batch_size, tf.float32)
 outputs, _states = tf.nn.dynamic_rnn(
     cell, X, initial_state=initial_state, dtype=tf.float32)
 
 weights = tf.ones([batch_size, sequence_length])
-sequence_loss = tf.contrib.seq2seq.sequence_loss(
-    logits=outputs, targets=Y, weights=weights)
+#sequence_loss = tf.contrib.seq2seq.sequence_loss(logits=outputs, targets=Y, weights=weights)
+sequence_loss = tf.nn.seq2seq.sequence_loss_by_example(logits=outputs, targets=Y, weights=weights)
+
+
 loss = tf.reduce_mean(sequence_loss)
 train = tf.train.AdamOptimizer(learning_rate=0.1).minimize(loss)
 
