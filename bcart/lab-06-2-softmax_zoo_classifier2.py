@@ -20,8 +20,10 @@ class XXX (NeuralNetwork):
         self.set_cost_function(NNType.SOFTMAX)
         self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
 
+
 gildong = XXX()
 gildong.learn_with_file('data-04-zoo.csv', 2000, 100)
+gildong.show_error()
 gildong.evaluate_file_one_hot('data-04-zoo.csv', 7)
 gildong.print_error()
 
