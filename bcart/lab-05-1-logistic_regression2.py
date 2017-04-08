@@ -15,9 +15,6 @@ class MVLogisticRegression (NeuralNetwork):
         self.set_cost_function(NNType.LOGISTIC)
         self.set_optimizer(NNType.GRADIENT_DESCENT, l_rate=0.1)
 
-    def my_log(self, i, x_data, y_data):
-        pass
-
 
 gildong = MVLogisticRegression()
 
@@ -34,7 +31,7 @@ y_data = [[0],
           [1],
           [1]]
 
-gildong.learn(x_data, y_data, 5000, 200);
+gildong.learn(x_data, y_data, 10000, 200);
 gildong.show_error()
 gildong.test_sigmoid(x_data)
 gildong.evaluate_sigmoid(x_data, y_data)

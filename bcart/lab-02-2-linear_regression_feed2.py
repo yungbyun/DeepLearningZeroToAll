@@ -1,51 +1,80 @@
 # Lab 2 Linear Regression
 import tensorflow as tf
-from nntype import NNType
 from neural_network import NeuralNetwork
 
 
-class MVLogisticRegression (NeuralNetwork):
-    def init_network(self):
-        self.set_placeholder(2, 1)
+class MyNeuralNetwork2:
+    # place holders
+    X = None
+    Y = None
 
-        output = self.create_layer(self.X, 2, 1, 'W', 'b')
-        output = tf.sigmoid(output)
+    hypothesis = None
+    cost_function = None
+    optimizer = None
+
+    sess = None
+
+    def set_placeholder(self):
+        self.X = tf.placeholder(tf.float32, shape=[None])
+        self.Y = tf.placeholder(tf.float32, shape=[None])
+
+    def create_layer(self, previous_output):
+        W = tf.Variable(tf.random_normal([1]), name='weight')
+        b = tf.Variable(tf.random_normal([1]), name='bias')
+        output = previous_output * W + b
+        return output
+
+    def set_hypothesis(self, h):
+        self.hypothesis = h
+
+    def set_cost_function(self):
+        self.cost_function = tf.reduce_mean(tf.square(self.hypothesis - self.Y))
+
+    def set_optimizer(self, l_rate):
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+        self.optimizer = optimizer.minimize(self.cost_function)
+
+    def test(self, xdata):
+        print(self.sess.run(self.hypothesis, feed_dict={self.X: xdata}))
+
+    def learn(self, xdata, ydata, total_loop, check_step):
+        tf.set_random_seed(777)  # for reproducibility
+
+        if self.sess == None:
+            self.init_network()
+            self.sess = tf.Session()
+            self.sess.run(tf.global_variables_initializer())
+
+        for step in range(total_loop + 1):
+            cost_val, _ = self.sess.run([self.cost_function, self.optimizer],
+                feed_dict={self.X: xdata, self.Y: ydata})
+            if step % check_step == 0:
+                print(step, cost_val)
+
+
+class XXX (MyNeuralNetwork2):
+    def init_network(self):
+        self.set_placeholder()
+
+        output = self.create_layer(self.X)
 
         self.set_hypothesis(output)
-        self.set_cost_function(NNType.LOGISTIC)
-        self.set_optimizer(NNType.GRADIENT_DESCENT, 0.1)
+        self.set_cost_function()
+        self.set_optimizer(0.01)
+
+        '''
+        1980 2.82812e-07 [ 1.00034416] [ 1.09875762]
+        2000 2.46997e-07 [ 1.00032163] [ 1.09883893]
+        [ 6.1004467]
+        [ 3.59964275]
+        [ 2.59932137  4.59996462]
+        '''
 
 
-x_data = [[1, 2],
-          [2, 3],
-          [3, 1],
-          [4, 3],
-          [5, 3],
-          [6, 2]]
-y_data = [[0],
-          [0],
-          [0],
-          [1],
-          [1],
-          [1]]
+gildong = XXX()
+gildong.learn([1, 2, 3], [1, 2, 3], 2000, 20)
+gildong.learn([1, 2, 3, 4, 5], [2.1, 3.1, 4.1, 5.1, 6.1], 2000, 20)
+gildong.test([5])
+gildong.test([2.5])
+gildong.test([1.5, 3.5])
 
-gildong = MVLogisticRegression()
-gildong.learn(x_data, y_data, 4000, 100)
-gildong.evaluate_sigmoid(x_data, y_data)
-gildong.test_sigmoid([[6, 2]])
-
-'''
-[1, 2]
-[2, 3]
-[3, 1]
-[4, 3]
-[5, 3]
-[6, 2]
-->
-[ 0.00224411]
-[ 0.06879371]
-[ 0.09333074]
-[ 0.90649462]
-[ 0.99107587]
-[ 0.9977513]
-'''

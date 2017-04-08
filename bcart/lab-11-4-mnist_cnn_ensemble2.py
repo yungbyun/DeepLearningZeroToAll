@@ -58,7 +58,7 @@ class MyEnsemble (EnsembleCore):
 
 
 gildong = MyEnsemble()
-gildong.learn_ensemble(7, 0, 100)
+gildong.learn_ensemble(7, 15, 100)
 gildong.evaluate_all_models()
 
 
