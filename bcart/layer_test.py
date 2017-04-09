@@ -35,3 +35,8 @@ sess.run(tf.global_variables_initializer())
 print(hypothesis)
 print(sess.run(hypothesis))
 '''
+
+print('Hello\n')
+
+print(tf.nn.rnn_cell.BasicRNNCell)
+
