@@ -15,14 +15,17 @@ class XXX (MnistCNN):
     def init_network(self):
         self.set_placeholder(784, 10, 28, 28)
 
+        # 1, 2
         CL_a = self.convolution_layer(self.X_2d, 3, 3, 1, 32, 1, 1)
         CL_a = self.relu(CL_a)
         CL_a_maxp = self.max_pooling(CL_a, 2, 2, 2, 2)
 
+        #3, 4
         CL_b = self.convolution_layer(CL_a_maxp, 3, 3, 32, 64, 1, 1)
         CL_b = self.relu(CL_b)
         CL_b_maxp = self.max_pooling(CL_b, 2, 2, 2, 2)
 
+        # 5
         reshaped = tf.reshape(CL_b_maxp, [-1, 7*7*64])
         hypo = self.fully_connected_layer(reshaped, 7*7*64, 10, 'input_l')
         self.set_hypothesis(hypo)
@@ -32,7 +35,7 @@ class XXX (MnistCNN):
 
 
 gildong = XXX()
-gildong.learn_mnist(3, 100)
+gildong.learn_mnist(15, 100)
 gildong.evaluate()
 gildong.classify_random()
 gildong.show_error()

@@ -9,13 +9,13 @@ class XXX (MnistNeuralNetwork):
 
         #self.xavier()
 
-        L1 = self.create_layer(self.X, 784, 256, NNType.RELU, 'Wa', 'ba')
+        L1 = self.create_layer(self.X, 784, 256, 'Wa', 'ba')
         L1 = tf.nn.relu(L1)
 
-        L2 = self.create_layer(L1, 256, 256, NNType.RELU, 'Wb', 'bb')
+        L2 = self.create_layer(L1, 256, 256, 'Wb', 'bb')
         L2 = tf.nn.relu(L2)
 
-        L3 = self.create_layer(L2, 256, 10, NNType.SQUARE_MEAN, 'Wc', 'bc')
+        L3 = self.create_layer(L2, 256, 10, 'Wc', 'bc')
         self.set_hypothesis(L3)
 
         self.set_cost_function(NNType.SOFTMAX_LOGITS)
@@ -23,7 +23,7 @@ class XXX (MnistNeuralNetwork):
 
 
 gildong = XXX()
-gildong.learn_mnist(3, 100)
+gildong.learn_mnist(15, 100)
 gildong.evaluate()
 gildong.classify_random()
 gildong.show_error()

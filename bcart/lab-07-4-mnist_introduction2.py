@@ -9,7 +9,7 @@ class XXX (MnistNeuralNetwork):
     def init_network (self):
         self.set_placeholder(784, 10) #28 * 28 = 784, 0~9 digits -> num_of_input, num_of_neuron
 
-        L = self.create_layer(self.X, 784, 10, NNType.SOFTMAX, 'Wa', 'ba')
+        L = self.create_layer(self.X, 784, 10, 'Wa', 'ba')
         L = tf.nn.softmax(L)
 
         self.set_hypothesis(L)

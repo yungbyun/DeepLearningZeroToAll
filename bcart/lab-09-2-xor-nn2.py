@@ -9,10 +9,10 @@ class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        L1 = self.create_layer(self.X, 2, 2, NNType.LOGISTIC, 'weight_a', 'bias_a')
+        L1 = self.create_layer(self.X, 2, 2, 'Wa', 'ba')
         L1 = tf.sigmoid(L1)
 
-        L2 = self.create_layer(L1, 2, 1, NNType.LOGISTIC, 'weight_b', 'bias_b')
+        L2 = self.create_layer(L1, 2, 1, 'Wb', 'bb')
         L2 = tf.sigmoid(L2)
 
         self.set_hypothesis(L2)

@@ -17,13 +17,13 @@ class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L1 = self.create_layer(self.X, 784, 256, NNType.RELU, 'weight_a', 'bias_a')
+        L1 = self.create_layer(self.X, 784, 256, 'Wa', 'ba')
         L1 = tf.nn.relu(L1)
 
-        L2 = self.create_layer(L1, 256, 256, NNType.RELU, 'weight_b', 'bias_b')
+        L2 = self.create_layer(L1, 256, 256, 'wb', 'bb')
         L2 = tf.nn.relu(L2)
 
-        L3 = self.create_layer(L2, 256, 10, NNType.SQUARE_MEAN, 'weight_c', 'bias_c')
+        L3 = self.create_layer(L2, 256, 10, 'Wc', 'bc')
         self.set_hypothesis(L3)
 
         self.set_cost_function(NNType.SOFTMAX_LOGITS)

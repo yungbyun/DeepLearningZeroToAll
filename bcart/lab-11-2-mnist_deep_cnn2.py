@@ -12,22 +12,25 @@ class XXXModel (DropoutMnistCNN):
         CL_a = self.relu(CL_a)
         CL_a_maxp = self.max_pooling(CL_a, 2, 2, 2, 2)
         CL_a_maxp = self.dropout(CL_a_maxp)
+
         # 3, 4
         CL_b = self.convolution_layer(CL_a_maxp, 3, 3, 32, 64, 1, 1)
         CL_b = self.relu(CL_b)
         CL_b_maxp = self.max_pooling(CL_b, 2, 2, 2, 2)
         CL_b_maxp = self.dropout(CL_b_maxp)
+
         # 5, 6
         CL_c = self.convolution_layer(CL_b_maxp, 3, 3, 64, 128, 1, 1)
         CL_c = self.relu(CL_c)
         CL_c_maxp = self.max_pooling(CL_c, 2, 2, 2, 2)
         CL_c_maxp = self.dropout(CL_c_maxp)
-        # 7
 
+        # 7
         reshaped = tf.reshape(CL_c_maxp, [-1, 128 * 4 * 4])
         output = self.fully_connected_layer(reshaped, 128 * 4 * 4, 625, 'W4')
         L4 = self.relu(output)
         L4 = self.dropout(L4)
+
         # 8
         hypo = self.fully_connected_layer(L4, 625, 10, 'W5')
         self.set_hypothesis(hypo)

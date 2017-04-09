@@ -10,7 +10,7 @@ class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        L = self.create_layer(self.X, 2, 1, NNType.LOGISTIC, 'Wa', 'ba')
+        L = self.create_layer(self.X, 2, 1, 'W', 'b')
         L = tf.nn.sigmoid(L)
 
         #self.set_weight_bias(2, 1)
