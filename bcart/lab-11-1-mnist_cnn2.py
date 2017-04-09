@@ -18,12 +18,12 @@ class XXX (MnistCNN):
         # 1, 2
         CL_a = self.convolution_layer(self.X_2d, 3, 3, 1, 32, 1, 1)
         CL_a = self.relu(CL_a)
-        CL_a_maxp = self.max_pooling(CL_a, 2, 2, 2, 2)
+        CL_a_maxp = self.max_pool(CL_a, 2, 2, 2, 2)
 
         #3, 4
         CL_b = self.convolution_layer(CL_a_maxp, 3, 3, 32, 64, 1, 1)
         CL_b = self.relu(CL_b)
-        CL_b_maxp = self.max_pooling(CL_b, 2, 2, 2, 2)
+        CL_b_maxp = self.max_pool(CL_b, 2, 2, 2, 2)
 
         # 5
         reshaped = tf.reshape(CL_b_maxp, [-1, 7*7*64])

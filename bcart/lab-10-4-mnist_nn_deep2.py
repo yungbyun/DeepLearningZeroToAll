@@ -21,29 +21,30 @@ Optimizer: ADAM
 
 
 class XXX (MnistNeuralNetwork):
+    def set_weight_initializer(self):
+        self.xavier()
+
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L1 = self.create_layer(self.X, 784, 512, 'weight_a', 'bias_a')
+        L1 = self.fully_connected_layer(self.X, 784, 512, 'weight_a', 'bias_a')
         L1 = tf.nn.relu(L1)
 
-        L2 = self.create_layer(L1, 512, 512, 'weight_b', 'bias_b')
+        L2 = self.fully_connected_layer(L1, 512, 512, 'weight_b', 'bias_b')
         L2 = tf.nn.relu(L2)
 
-        L3 = self.create_layer(L2, 512, 512, 'weight_c', 'bias_c')
+        L3 = self.fully_connected_layer(L2, 512, 512, 'weight_c', 'bias_c')
         L3 = tf.nn.relu(L3)
 
-        L4 = self.create_layer(L3, 512, 512, 'weight_d', 'bias_d')
+        L4 = self.fully_connected_layer(L3, 512, 512, 'weight_d', 'bias_d')
         L4 = tf.nn.relu(L4)
 
-        hypo = self.create_layer(L4, 512, 10, 'weight_e', 'bias_e')
+        hypo = self.fully_connected_layer(L4, 512, 10, 'weight_e', 'bias_e')
 
         self.set_hypothesis(hypo)
         self.set_cost_function(NNType.SOFTMAX_LOGITS)
         self.set_optimizer(NNType.ADAM, 0.001)
 
-    def set_weight_initializer(self):
-        self.xavier()
 
 
 gildong = XXX()
@@ -61,4 +62,12 @@ Learning Finished!
 Accuracy: 0.9724
 Label:  [3]
 Prediction:  [3]
+
+
+Start learning:
+.
+Done!
+
+Recognition rate : 0.9512
+
 '''

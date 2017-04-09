@@ -12,7 +12,7 @@ class XXX (NeuralNetworkOneHot):
 
         self.target_to_one_hot(7)
 
-        logits = self.create_layer(self.X, 16, 7, 'W', 'b')
+        logits = self.fully_connected_layer(self.X, 16, 7, 'W', 'b')
         hypothesis = self.softmax(logits)
 
         self.set_hypothesis(hypothesis)
@@ -37,26 +37,20 @@ for p, y in zip(pred, y_data.flatten()):
 '''
 
 '''
-Step:     0	Loss: 5.10635
-Step:   100	Loss: 0.80030
-Step:   200	Loss: 0.48635
-Step:   300	Loss: 0.34942
-Step:   400	Loss: 0.27165
-Step:   500	Loss: 0.22188
-Step:   600	Loss: 0.18692
-Step:   700	Loss: 0.16078
-Step:   800	Loss: 0.14046
-Step:   900	Loss: 0.12429
-Step:  1000	Loss: 0.11121
-Step:  1100	Loss: 0.10050
-Step:  1200	Loss: 0.09163
-Step:  1300	Loss: 0.08418
-Step:  1400	Loss: 0.07786
-Step:  1500	Loss: 0.07243
-Step:  1600	Loss: 0.06772
-Step:  1700	Loss: 0.06361
-Step:  1800	Loss: 0.05997
-Step:  1900	Loss: 0.05675
-Step:  2000	Loss: 0.05386
+2000 ->
+Start learning:
+.....................
+Done!
+
+5.10635090
+0.80030119
+0.48635006
+0.34942439
+0.27165213
+....
+0.06360651
+0.05997481
+0.05674770
+0.05386126
 Acc: 100.00%
 '''

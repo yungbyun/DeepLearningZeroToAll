@@ -44,7 +44,7 @@ with tf.Session() as sess:
     # Initialize TensorFlow variables
     sess.run(tf.global_variables_initializer())
 
-    for step in range(10001):
+    for step in range(2001):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
         if step % 100 == 0:
             print(step, sess.run(cost, feed_dict={
@@ -57,10 +57,11 @@ with tf.Session() as sess:
 
 
 '''
-Hypothesis:  [[ 0.01338218]
- [ 0.98166394]
- [ 0.98809403]
- [ 0.01135799]]
+2000
+Hypothesis:  [[ 0.06918658]
+ [ 0.92086309]
+ [ 0.86154044]
+ [ 0.14349058]]
 Correct:  [[ 0.]
  [ 1.]
  [ 1.]

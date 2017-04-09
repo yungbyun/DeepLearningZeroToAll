@@ -12,21 +12,24 @@ class MyCNN (CNNCore):
 
         L1 = self.convolution_layer(self.X_2d, 3, 3, 1, 32, 1, 1)
         L1 = self.relu(L1)
-        L1 = self.max_pool(L1, 2, 2, 2, 2)
-        L1 = self.dropout(L1)
 
-        L2 = self.convolution_layer(L1, 3, 3, 32, 64, 1, 1)
+        L1_p = self.max_pool(L1, 2, 2, 2, 2)
+        L1_p = self.dropout(L1_p)
+
+        L2 = self.convolution_layer(L1_p, 3, 3, 32, 64, 1, 1)
         L2 = self.relu(L2)
-        L2 = self.max_pool(L2, 2, 2, 2, 2)
-        L2 = self.dropout(L2)
 
-        L3 = self.convolution_layer(L2, 3, 3, 64, 128, 1, 1)
+        L2_p = self.max_pool(L2, 2, 2, 2, 2)
+        L2_p = self.dropout(L2_p)
+
+        L3 = self.convolution_layer(L2_p, 3, 3, 64, 128, 1, 1)
         L3 = self.relu(L3)
-        L3 = self.max_pool(L3, 2, 2, 2, 2)
-        L3 = self.dropout(L3)
+
+        L3_p = self.max_pool(L3, 2, 2, 2, 2)
+        L3_p = self.dropout(L3_p)
 
         # L4 FC 4x4x128 inputs -> 625 outputs
-        reshaped = tf.reshape(L3, [-1, 128 * 4 * 4])
+        reshaped = tf.reshape(L3_p, [-1, 128 * 4 * 4])
         L4 = self.fully_connected_layer(reshaped, 128 * 4 * 4, 625, 'W4')
         L4 = self.relu(L4)
         L4 = self.dropout(L4)

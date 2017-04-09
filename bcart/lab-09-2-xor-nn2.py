@@ -9,10 +9,10 @@ class XXX (NeuralNetwork) :
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        L1 = self.create_layer(self.X, 2, 2, 'Wa', 'ba')
+        L1 = self.fully_connected_layer(self.X, 2, 2, 'Wa', 'ba')
         L1 = tf.sigmoid(L1)
 
-        L2 = self.create_layer(L1, 2, 1, 'Wb', 'bb')
+        L2 = self.fully_connected_layer(L1, 2, 1, 'Wb', 'bb')
         L2 = tf.sigmoid(L2)
 
         self.set_hypothesis(L2)
@@ -27,7 +27,7 @@ class XXX (NeuralNetwork) :
 gildong  = XXX()
 xdata = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=np.float32)
 ydata = np.array([[0], [1], [1], [0]], dtype=np.float32)
-gildong.learn(xdata, ydata, 10000, 100)
+gildong.learn(xdata, ydata, 3000, 100)
 gildong.evaluate_sigmoid(xdata, ydata)
 gildong.test_sigmoid([[0, 1], [1, 0]])
 gildong.show_error()

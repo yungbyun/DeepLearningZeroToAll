@@ -8,7 +8,7 @@ class MVLogisticRegression4Diabetes (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(8, 1)
 
-        output = self.create_layer(self.X, 8, 1, 'W', 'b')
+        output = self.fully_connected_layer(self.X, 8, 1, 'W', 'b')
         output = tf.sigmoid(output)
 
         self.set_hypothesis(output)

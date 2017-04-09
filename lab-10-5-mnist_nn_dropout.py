@@ -13,7 +13,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 # parameters
 learning_rate = 0.001
-training_epochs = 15
+training_epochs = 1 #15
 batch_size = 100
 
 # input place holders
@@ -112,4 +112,25 @@ Epoch: 0014 cost = 0.041290121
 Epoch: 0015 cost = 0.043621063
 Learning Finished!
 Accuracy: 0.9804
+
+
+Epoch: 0001 cost = 0.477939509
+Epoch: 0002 cost = 0.175270654
+Epoch: 0003 cost = 0.133191112
+Epoch: 0004 cost = 0.114243801
+Epoch: 0005 cost = 0.094151693
+Epoch: 0006 cost = 0.085844015
+Epoch: 0007 cost = 0.076567110
+Epoch: 0008 cost = 0.069603106
+Epoch: 0009 cost = 0.066055900
+Epoch: 0010 cost = 0.057560001
+Epoch: 0011 cost = 0.055450695
+Epoch: 0012 cost = 0.052910380
+Epoch: 0013 cost = 0.051279345
+Epoch: 0014 cost = 0.048891842
+Epoch: 0015 cost = 0.047163346
+Learning Finished!
+Accuracy: 0.9813
+Label:  [4]
+Prediction:  [4]
 '''

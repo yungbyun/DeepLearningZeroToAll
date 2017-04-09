@@ -18,7 +18,7 @@ class MyNeuralNetwork2:
         self.X = tf.placeholder(tf.float32, shape=[None])
         self.Y = tf.placeholder(tf.float32, shape=[None])
 
-    def create_layer(self, previous_output, num_of_input, num_of_neuron, w_name, b_name):
+    def fully_connected_layer(self, previous_output, num_of_input, num_of_neuron, w_name, b_name):
         W = tf.Variable(tf.random_normal([num_of_input]), name=w_name)
         b = tf.Variable(tf.random_normal([num_of_neuron]), name=b_name)
         output = previous_output * W + b
@@ -56,19 +56,12 @@ class XXX (MyNeuralNetwork2):
     def init_network(self):
         self.set_placeholder()
 
-        hypo = self.create_layer(self.X, 1, 1, 'W', 'b')
+        hypo = self.fully_connected_layer(self.X, 1, 1, 'W', 'b')
 
         self.set_hypothesis(hypo)
         self.set_cost_function()
         self.set_optimizer(0.01)
 
-        '''
-        1980 2.82812e-07 [ 1.00034416] [ 1.09875762]
-        2000 2.46997e-07 [ 1.00032163] [ 1.09883893]
-        [ 6.1004467]
-        [ 3.59964275]
-        [ 2.59932137  4.59996462]
-        '''
 
 
 gildong = XXX()
@@ -78,3 +71,10 @@ gildong.test([5])
 gildong.test([2.5])
 gildong.test([1.5, 3.5])
 
+'''
+1980 2.82812e-07 [ 1.00034416] [ 1.09875762]
+2000 2.46997e-07 [ 1.00032163] [ 1.09883893]
+[ 6.1004467]
+[ 3.59964275]
+[ 2.59932137  4.59996462]
+'''

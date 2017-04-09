@@ -12,9 +12,9 @@ class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L = self.create_layer(self.X, 784, 10, 'Wa', 'ba')  # for logits
+        logit = self.fully_connected_layer(self.X, 784, 10, 'Wa', 'ba')  # for logits
 
-        self.set_hypothesis(L)
+        self.set_hypothesis(logit)
         self.set_cost_function(NNType.SOFTMAX_LOGITS)
         self.set_optimizer(NNType.ADAM, 0.001)
 

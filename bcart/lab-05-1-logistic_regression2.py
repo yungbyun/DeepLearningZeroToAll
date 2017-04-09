@@ -8,7 +8,7 @@ class MVLogisticRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(2, 1)
 
-        output = self.create_layer(self.X, 2, 1, 'W', 'b')
+        output = self.fully_connected_layer(self.X, 2, 1, 'W', 'b')
         output = tf.sigmoid(output)
 
         self.set_hypothesis(output)

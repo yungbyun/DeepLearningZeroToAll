@@ -10,19 +10,22 @@ class XXXModel (DropoutMnistCNN):
         # 1, 2
         CL_a = self.convolution_layer(self.X_2d, 3, 3, 1, 32, 1, 1)
         CL_a = self.relu(CL_a)
-        CL_a_maxp = self.max_pooling(CL_a, 2, 2, 2, 2)
+
+        CL_a_maxp = self.max_pool(CL_a, 2, 2, 2, 2)
         CL_a_maxp = self.dropout(CL_a_maxp)
 
         # 3, 4
         CL_b = self.convolution_layer(CL_a_maxp, 3, 3, 32, 64, 1, 1)
         CL_b = self.relu(CL_b)
-        CL_b_maxp = self.max_pooling(CL_b, 2, 2, 2, 2)
+
+        CL_b_maxp = self.max_pool(CL_b, 2, 2, 2, 2)
         CL_b_maxp = self.dropout(CL_b_maxp)
 
         # 5, 6
         CL_c = self.convolution_layer(CL_b_maxp, 3, 3, 64, 128, 1, 1)
         CL_c = self.relu(CL_c)
-        CL_c_maxp = self.max_pooling(CL_c, 2, 2, 2, 2)
+
+        CL_c_maxp = self.max_pool(CL_c, 2, 2, 2, 2)
         CL_c_maxp = self.dropout(CL_c_maxp)
 
         # 7
