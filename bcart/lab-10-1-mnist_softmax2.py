@@ -12,7 +12,7 @@ class XXX (MnistNeuralNetwork):
     def init_network(self):
         self.set_placeholder(784, 10)
 
-        L = self.create_layer(self.X, 784, 10, NNType.SQUARE_MEAN, 'Wa', 'ba')  # for logits
+        L = self.create_layer(self.X, 784, 10, 'Wa', 'ba')  # for logits
 
         self.set_hypothesis(L)
         self.set_cost_function(NNType.SOFTMAX_LOGITS)

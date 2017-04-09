@@ -20,7 +20,7 @@ class MVLogisticRegression4Diabetes (NeuralNetwork):
 
 
 gildong = MVLogisticRegression4Diabetes()
-gildong.learn_with_file('data-03-diabetes.csv', 2000, 200) #10000, 200
+gildong.learn_with_file('data-03-diabetes.csv', 10000, 200) #10000, 200
 gildong.test_sigmoid([[0.176471,0.155779,0,0,0,0.052161,-0.952178,-0.733333]])
 
 f2b = File2Buffer()

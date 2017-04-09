@@ -10,9 +10,9 @@ class MVLinearRegression (NeuralNetwork):
     def init_network(self):
         self.set_placeholder(3, 1)
 
-        output = self.create_layer(self.X, 3, 1, 'W', 'b')
+        hypo = self.create_layer(self.X, 3, 1, 'W', 'b')
 
-        self.set_hypothesis(output)
+        self.set_hypothesis(hypo)
         self.set_cost_function(NNType.SQUARE_MEAN)
         self.set_optimizer(NNType.GRADIENT_DESCENT, l_rate=1e-5)
 

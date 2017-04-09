@@ -17,9 +17,9 @@ class MyNeuralNetwork1:
         self.x_data = xdata
         self.y_data = ydata
 
-    def create_layer(self):
-        W = tf.Variable(tf.random_normal([1]), name='weight')
-        b = tf.Variable(tf.random_normal([1]), name='bias')
+    def create_layer(self, num_of_input, num_of_neuron, w_name, b_name):
+        W = tf.Variable(tf.random_normal([num_of_input]), name=w_name)
+        b = tf.Variable(tf.random_normal([num_of_neuron]), name=b_name)
         output = self.x_data * W + b
         return output
 
@@ -53,9 +53,9 @@ class MyNeuralNetwork1:
 class SimpleNeuron (MyNeuralNetwork1):
     def init_network(self):
 
-        output = self.create_layer()
+        hypo = self.create_layer(1, 1, 'W', 'b')
 
-        self.set_hypothesis(output)
+        self.set_hypothesis(hypo)
         self.set_cost_function()
         self.set_optimizer(0.1)
 

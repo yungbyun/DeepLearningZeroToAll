@@ -18,9 +18,9 @@ class MyNeuralNetwork2:
         self.X = tf.placeholder(tf.float32, shape=[None])
         self.Y = tf.placeholder(tf.float32, shape=[None])
 
-    def create_layer(self, previous_output):
-        W = tf.Variable(tf.random_normal([1]), name='weight')
-        b = tf.Variable(tf.random_normal([1]), name='bias')
+    def create_layer(self, previous_output, num_of_input, num_of_neuron, w_name, b_name):
+        W = tf.Variable(tf.random_normal([num_of_input]), name=w_name)
+        b = tf.Variable(tf.random_normal([num_of_neuron]), name=b_name)
         output = previous_output * W + b
         return output
 
@@ -56,9 +56,9 @@ class XXX (MyNeuralNetwork2):
     def init_network(self):
         self.set_placeholder()
 
-        output = self.create_layer(self.X)
+        hypo = self.create_layer(self.X, 1, 1, 'W', 'b')
 
-        self.set_hypothesis(output)
+        self.set_hypothesis(hypo)
         self.set_cost_function()
         self.set_optimizer(0.01)
 
