@@ -15,8 +15,11 @@ class XXX:
     prediction = None
 
     def set_placeholder(self, seq_len, hidden_size):
+        #self.X = tf.placeholder(tf.float32, [None, seq_len, hidden_size])  # None, 6, 5, X one-hot
+        #self.Y = tf.placeholder(tf.int32, [None, seq_len])  # Y label
         self.X = tf.placeholder(tf.float32, [None, seq_len, hidden_size])  # None, 6, 5, X one-hot
         self.Y = tf.placeholder(tf.int32, [None, seq_len])  # Y label
+
 
     def rnn_lstm_cell(self, hidden_size, batch_size ):
         #cell = tf.nn.rnn_cell.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
