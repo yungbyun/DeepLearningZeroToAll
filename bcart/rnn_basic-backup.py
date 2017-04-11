@@ -30,12 +30,14 @@ with tf.variable_scope('one_cell') as scope:
 
     outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32)
 
+
+
     sess.run(tf.global_variables_initializer())
 
     pp.pprint(sess.run(outputs))
     pp.pprint(sess.run(outputs))
 
-'''
+
 with tf.variable_scope('two_sequances') as scope:
     # One cell RNN input_dim (4) -> output_dim (2). sequence: 5
     hidden_size = 2
@@ -177,7 +179,6 @@ print("Loss: ", sequence_loss.eval())
 
 
 
-
 # [batch_size, sequence_length]
 y_data = tf.constant([[1, 1, 1]])
 
@@ -198,7 +199,6 @@ print("Loss1: ", sequence_loss1.eval(),
       "Loss2: ", sequence_loss2.eval(),
       "Loss3: ", sequence_loss3.eval())
 
-'''
 
 
 

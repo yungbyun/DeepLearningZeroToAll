@@ -23,11 +23,51 @@ class XXX:
         output, _states = tf.nn.dynamic_rnn(cell, self.X, dtype=tf.float32)
         return output
     '''
-    def rnn_layer(self, xdata, hidden_size):
+    def rnn_layer_with_RNN_cell(self, xdata, hidden_size):
         # One cell RNN input_dim (4) -> output_dim (2)
-        cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_size)
+        cell = rnn.BasicRNNCell(num_units=hidden_size)
         output, _states = tf.nn.dynamic_rnn(cell, xdata, dtype=tf.float32)
+
         return output
+
+    def rnn_layer_with_LSTM_cell(self, xdata, hidden_size, seq_len=None, init_state=0):
+
+        if seq_len==None and init_state==0:
+            print('seq_len==None and init_state==0')
+            cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+            output, _states = tf.nn.dynamic_rnn(cell, xdata, dtype=tf.float32)
+        elif seq_len!=None and init_state==0:
+            print('seq_len!=None and init_state==0')
+            cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+            output, _states = tf.nn.dynamic_rnn(cell, xdata, sequence_length=seq_len, dtype=tf.float32)
+        elif seq_len==None and init_state==1:
+            print('seq_len==None and init_state==1')
+            batch_size = 3
+            cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+            initial_state = cell.zero_state(batch_size, tf.float32)
+            output, _states = tf.nn.dynamic_rnn(cell, xdata, initial_state=initial_state, dtype=tf.float32)
+        return output
+
+        '''
+        cell = rnn.BasicRNNCell(num_units=hidden_size)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32)
+        
+        cell = rnn.BasicRNNCell(num_units=hidden_size)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32)
+        
+        ===========
+        cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32)
+        
+        cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, sequence_length=[5, 3, 4], dtype=tf.float32)
+    
+        cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+        initial_state = cell.zero_state(batch_size, tf.float32)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
+            
+            
+        '''
 
     '''
     def test_ph(self, achar):
@@ -73,7 +113,7 @@ class XXX:
             x_data = np.array([[h]], dtype=np.float32)
             print(x_data.shape)
 
-            outputs = self.rnn_layer(x_data, 2) # shape=(1, 1, 4)
+            outputs = self.rnn_layer_with_RNN_cell(x_data, 2) # shape=(1, 1, 4)
             self.set_hypothesis(outputs)
 
             self.sess.run(tf.global_variables_initializer())
@@ -86,7 +126,7 @@ class XXX:
             x_data = np.array([[h, e, l, o]], dtype=np.float32)
             print(x_data.shape)
 
-            outputs = self.rnn_layer(x_data, 2) #shape=(1,4,4)
+            outputs = self.rnn_layer_with_RNN_cell(x_data, 2) #shape=(1,4,4)
             self.set_hypothesis(outputs)
 
             self.sess.run(tf.global_variables_initializer())
@@ -102,46 +142,56 @@ class XXX:
                                [l, l, e, e, l]], dtype=np.float32)
             print(x_data.shape)
 
-            outputs = self.rnn_layer(x_data, 2) # shape=(3,5,4)
+            outputs = self.rnn_layer_with_LSTM_cell(x_data, 2) # shape=(3,5,4)
             self.set_hypothesis(outputs)
 
             self.sess.run(tf.global_variables_initializer())
 
             self.test()
 
-
+        # 문자 5개짜리 각각에 대하여 sequence_length를 지정
         with tf.variable_scope('3_batches_dynamic_length') as scope:
             # One cell RNN input_dim (4) -> output_dim (5). sequence: 5, batch 3
             # 3 batches 'hello', 'eolll', 'lleel'
             x_data = np.array([[h, e, l, l, o],
                                [e, o, l, l, l],
-                               [l, l, e, e, l]], dtype=np.float32)
-            print(x_data.shape)
+                               [l, l, e, e, l]], dtype=np.float32) #shape=(3,5,4)
+            print('seq_len', x_data.shape)
 
-            hidden_size = 2
-            cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
-            outputs, _states = tf.nn.dynamic_rnn(cell, x_data, sequence_length=[5, 3, 4], dtype=tf.float32)
+            output = self.rnn_layer_with_LSTM_cell(x_data, 2, [5, 3, 4])
+            self.set_hypothesis(output)
+
+            #hidden_size = 2
+            #cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+            #outputs, _states = tf.nn.dynamic_rnn(cell, x_data, sequence_length=[5, 3, 4], dtype=tf.float32)
+
+            self.sess.run(tf.global_variables_initializer())
+
+            self.test()
+
+            #print(outputs.eval())
+
+
+        with tf.variable_scope('initial_state') as scope:
+            #batch_size = 3
+            x_data = np.array([[h, e, l, l, o],
+                               [e, o, l, l, l],
+                               [l, l, e, e, l]], dtype=np.float32)
+            print('initial')
+
+            self.rnn_layer_with_LSTM_cell(x_data, 2, None, 1)
+
+            # One cell RNN input_dim (4) -> output_dim (5). sequence: 5, batch: 3
+            #hidden_size = 2
+            #cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
+            #initial_state = cell.zero_state(batch_size, tf.float32)
+            #outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
+
             self.sess.run(tf.global_variables_initializer())
             print(outputs.eval())
 
 
         '''
-        with tf.variable_scope('initial_state') as scope:
-            batch_size = 3
-            x_data = np.array([[h, e, l, l, o],
-                               [e, o, l, l, l],
-                               [l, l, e, e, l]], dtype=np.float32)
-            pp.pprint(x_data)
-
-            # One cell RNN input_dim (4) -> output_dim (5). sequence: 5, batch: 3
-            hidden_size = 2
-            cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
-            initial_state = cell.zero_state(batch_size, tf.float32)
-            outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
-            sess.run(tf.global_variables_initializer())
-            pp.pprint(outputs.eval())
-
-
         batch_size=3
         sequence_length=5
         input_dim=3
