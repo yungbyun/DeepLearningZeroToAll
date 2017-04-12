@@ -66,7 +66,13 @@ class XXX:
         initial_state = cell.zero_state(batch_size, tf.float32)
         outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
             
-            
+        cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
+        initial_state = cell.zero_state(batch_size, tf.float32)
+        outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)    
+        
+        
+        
+        
         '''
 
     '''
@@ -118,7 +124,7 @@ class XXX:
 
             self.sess.run(tf.global_variables_initializer())
 
-            self.test()
+            #self.test()
 
         # 문자 5개 입력 -> sequences
         with tf.variable_scope('two_sequances') as scope:
@@ -131,9 +137,9 @@ class XXX:
 
             self.sess.run(tf.global_variables_initializer())
 
-            self.test()
+            #self.test()
 
-        # 문자 5개짜리를 3개 입력
+        # 문자 5개짜리를 3번 입력 : batches
         with tf.variable_scope('3_batches') as scope:
             # One cell RNN input_dim (4) -> output_dim (2). sequence: 5, batch 3
             # 3 batches 'hello', 'eolll', 'lleel'
@@ -147,7 +153,7 @@ class XXX:
 
             self.sess.run(tf.global_variables_initializer())
 
-            self.test()
+            #self.test()
 
         # 문자 5개짜리 각각에 대하여 sequence_length를 지정
         with tf.variable_scope('3_batches_dynamic_length') as scope:
@@ -161,15 +167,9 @@ class XXX:
             output = self.rnn_layer_with_LSTM_cell(x_data, 2, [5, 3, 4])
             self.set_hypothesis(output)
 
-            #hidden_size = 2
-            #cell = rnn.BasicLSTMCell(num_units=hidden_size, state_is_tuple=True)
-            #outputs, _states = tf.nn.dynamic_rnn(cell, x_data, sequence_length=[5, 3, 4], dtype=tf.float32)
-
             self.sess.run(tf.global_variables_initializer())
 
-            self.test()
-
-            #print(outputs.eval())
+            #self.test()
 
 
         with tf.variable_scope('initial_state') as scope:
@@ -188,62 +188,79 @@ class XXX:
             #outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
 
             self.sess.run(tf.global_variables_initializer())
-            print(outputs.eval())
+            #self.test()
+            #print(outputs.eval())
 
 
-        '''
+        # 생성된 데이터(3,5,3), 3차원 입력->5시퀀스->3배치, hidden_size=5이므로 5차원 출력
         batch_size=3
         sequence_length=5
         input_dim=3
 
         x_data = np.arange(45, dtype=np.float32).reshape(batch_size, sequence_length, input_dim)
-        pp.pprint(x_data)  # batch, sequence_length, input_dim
-
+        #print(x_data)  # batch, sequence_length, input_dim
 
         with tf.variable_scope('generated_data') as scope:
             # One cell RNN input_dim (3) -> output_dim (5). sequence: 5, batch: 3
-            cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
-            initial_state = cell.zero_state(batch_size, tf.float32)
-            outputs, _states = tf.nn.dynamic_rnn(cell, x_data,
-                                                 initial_state=initial_state, dtype=tf.float32)
-            sess.run(tf.global_variables_initializer())
-            pp.pprint(outputs.eval())
+
+            output = self.rnn_layer_with_LSTM_cell(x_data, 5, None, 1)
+            self.set_hypothesis(output)
+
+            #cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
+            #initial_state = cell.zero_state(batch_size, tf.float32)
+            #outputs, _states = tf.nn.dynamic_rnn(cell, x_data, initial_state=initial_state, dtype=tf.float32)
+            self.sess.run(tf.global_variables_initializer())
+
+            # 이러한 입력을 넣을 경우(3X5X3) 나오는 출력
+            #self.test()
 
 
+        # 다층 RNN : 5개 히든 뉴런이 3층으로 연결된 RNN
         with tf.variable_scope('MultiRNNCell') as scope:
             # Make rnn
-            cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
-            cell = rnn.MultiRNNCell([cell] * 3, state_is_tuple=True) # 3 layers
+            cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True) # 5=히든=출력
+            cell = rnn.MultiRNNCell([cell] * 3, state_is_tuple=True) # 5 히든이 3 layers
 
-            # rnn in/out
+            # rnn in & out
+            # 3차원 입력, 5차원 출력 -> 5시퀀스 & 3배치
+            # cell 네트워크에 x_data 입력을 줄 때 출력이 outputs임.
             outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32)
-            print("dynamic rnn: ", outputs)
-            sess.run(tf.global_variables_initializer())
-            pp.pprint(outputs.eval())  # batch size, unrolling (time), hidden_size
 
+            print("dynamic rnn outputs 텐서: ", outputs)
+            self.sess.run(tf.global_variables_initializer())
+
+            # 다층 RNN 출력을 구하라.
+            #print(outputs.eval())  # batch size, unrolling (time), hidden_size
+
+        # 5개의(5차원) 출력 뉴런을 갖는 RNN, 3-5-3 입력 -> 3 * 5개의 5차원 출력
+        # 이때 각 배치별 출력 수 지정 [1, 3, 2]
         with tf.variable_scope('dynamic_rnn') as scope:
-            cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
-            outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32,
-                                                 sequence_length=[1, 3, 2])
-            # lentgh 1 for batch 1, lentgh 2 for batch 2
 
-            print("dynamic rnn: ", outputs)
-            sess.run(tf.global_variables_initializer())
-            pp.pprint(outputs.eval())  # batch size, unrolling (time), hidden_size
+            #print(x_data)
+            cell = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True) # 출력 5
+            outputs, _states = tf.nn.dynamic_rnn(cell, x_data, dtype=tf.float32, sequence_length=[1, 3, 2])
+            # lentgh 1 for batch 1, lentgh 3 for batch 2, length 2 for batch 3
 
+            print("dynamic rnn의 outputs 텐서 ", outputs)
+            self.sess.run(tf.global_variables_initializer())
+            #print(outputs.eval())  # batch size, unrolling (time), hidden_size
 
+        # 5차원 출력을 갖는 cell 2개. 이를 이용하여 양방향 RNN을 구성하고 입력 x_data를 지정. 배치별 시퀀스 길이 지정.
+        # 이때 각 셀별로 출력값이 표시됨.
         with tf.variable_scope('bi-directional') as scope:
             # bi-directional rnn
             cell_fw = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
             cell_bw = rnn.BasicLSTMCell(num_units=5, state_is_tuple=True)
 
             outputs, states = tf.nn.bidirectional_dynamic_rnn(cell_fw, cell_bw, x_data,
-                                                              sequence_length=[2, 3, 1],
-                                                              dtype=tf.float32)
+                sequence_length=[2, 3, 1], dtype=tf.float32)
 
-            sess.run(tf.global_variables_initializer())
-            pp.pprint(sess.run(outputs))
-            pp.pprint(sess.run(states))
+            self.sess.run(tf.global_variables_initializer())
+
+            #print(self.sess.run(outputs))
+            # states 출력 결과는 아리송
+            #print(self.sess.run(states))
+
 
         # flattern based softmax
         hidden_size=3
@@ -251,16 +268,17 @@ class XXX:
         batch_size=3
         num_classes=5
 
-        pp.pprint(x_data) # hidden_size=3, sequence_length=4, batch_size=2
+        print(x_data) # hidden_size=3, sequence_length=4, batch_size=2
         x_data = x_data.reshape(-1, hidden_size)
-        pp.pprint(x_data)
+        print(x_data)
 
         softmax_w = np.arange(15, dtype=np.float32).reshape(hidden_size, num_classes)
+        print(softmax_w)
         outputs = np.matmul(x_data, softmax_w)
         outputs = outputs.reshape(-1, sequence_length, num_classes) # batch, seq, class
-        pp.pprint(outputs)
+        print(outputs)
 
-
+        '''
         # [batch_size, sequence_length]
         y_data = tf.constant([[1, 1, 1]])
 
