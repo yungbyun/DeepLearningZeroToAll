@@ -268,31 +268,31 @@ class XXX:
         batch_size=3
         num_classes=5
 
-        print(x_data) # hidden_size=3, sequence_length=4, batch_size=2
+        #print(x_data) # hidden_size=3, sequence_length=4, batch_size=2
         x_data = x_data.reshape(-1, hidden_size)
-        print(x_data)
+        #print(x_data)
 
-        softmax_w = np.arange(15, dtype=np.float32).reshape(hidden_size, num_classes)
-        print(softmax_w)
+        softmax_w = np.arange(15, dtype=np.float32).reshape(hidden_size, num_classes) #3, 5
+        #print(softmax_w)
         outputs = np.matmul(x_data, softmax_w)
         outputs = outputs.reshape(-1, sequence_length, num_classes) # batch, seq, class
-        print(outputs)
+        #print(outputs)
 
-        '''
+        # 의미있는 코드!!!
         # [batch_size, sequence_length]
-        y_data = tf.constant([[1, 1, 1]])
+        y_data = tf.constant([[1, 1, 1]])  #(1, 3)
 
         # [batch_size, sequence_length, emb_dim ]
-        prediction = tf.constant([[[0, 1], [1, 0], [0, 1]]], dtype=tf.float32)
+        prediction = tf.constant([[[0, 1], [1, 0], [0, 1]]], dtype=tf.float32) #(1, 3, 2)
 
         # [batch_size * sequence_length]
-        weights = tf.constant([[1, 1, 1]], dtype=tf.float32)
+        weights = tf.constant([[1, 1, 1]], dtype=tf.float32) #(1, 3)
 
+        # 시스템의 결과, 실제 맞춰야 할 값, 조정(학습)해야 할 가중치
+        # 위 3가지를 주고 오류를 구하라.
         sequence_loss = tf.contrib.seq2seq.sequence_loss(prediction, y_data, weights)
-        sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.global_variables_initializer())
         print("Loss: ", sequence_loss.eval())
-
-
 
 
         # [batch_size, sequence_length]
@@ -310,12 +310,11 @@ class XXX:
         sequence_loss2 = tf.contrib.seq2seq.sequence_loss(prediction2, y_data, weights)
         sequence_loss3 = tf.contrib.seq2seq.sequence_loss(prediction3, y_data, weights)
 
-        sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.global_variables_initializer())
         print("Loss1: ", sequence_loss1.eval(),
               "Loss2: ", sequence_loss2.eval(),
               "Loss3: ", sequence_loss3.eval())
 
-        '''
 
 gildong = XXX()
 gildong.run()

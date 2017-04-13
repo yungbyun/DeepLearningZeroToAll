@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+from tensorflow.contrib import rnn
 
 # not moldule
 sess = tf.Session()
@@ -11,26 +12,24 @@ print (char_dic)
 
 ground_temp = 'hello'
 ground_truth = [char_dic[c] for c in ground_temp]
-print (ground_truth)
+print ('ground truth', ground_truth)
 
 x_data = np.array([ [1,0,0,0],  # h
                     [0,1,0,0],  # e
                     [0,0,1,0],  # l
                     [0,0,1,0]],  # l
                      dtype='f')
+
 # Configuration
-rnn_size = len(char_dic) # 4
+rnn_size = len(char_dic) # 4 hidden_size, output_dim
 batch_size = 1
 output_size = 4
 
-
-
 # RNN Model
-rnn_cell = tf.nn.rnn_cell.BasicLSTMCell(num_units = rnn_size,
-                                       input_size = None, # deprecated at tensorflow 0.9
+#rnn_cell = tf.nn.rnn_cell.BasicLSTMCell(num_units = rnn_size, input_size = None, # deprecated at tensorflow 0.9
                                        #activation = tanh,
-                                       )
-
+#                                       )
+rnn_cell = rnn.BasicLSTMCell(num_units=4, state_is_tuple=True)
 print(rnn_cell)
 
 initial_state = rnn_cell.zero_state(batch_size, tf.float32)
@@ -38,8 +37,8 @@ print(initial_state)
 
 
 
-initial_state_1 = tf.zeros([batch_size, rnn_cell.state_size]) #  위 코드와 같은 결과
-print(initial_state_1)
+#initial_state_1 = tf.zeros([batch_size, rnn_cell.state_size]) #  위 코드와 같은 결과
+#print(initial_state_1)
 
 
 print (x_data)
@@ -51,7 +50,8 @@ print(x_split)
 
 #outputs, state = tf.nn.rnn(cell = rnn_cell, inputs = x_split, initial_state = initial_state)   #구버전
 outputs, state = tf.contrib.rnn.static_rnn(cell = rnn_cell, inputs = x_split, initial_state = initial_state)
-sess.run(tf.initialize_all_variables())
+
+sess.run(tf.global_variables_initializer())
 print (outputs)
 print (state)
 print(sess.run(state))
@@ -77,11 +77,12 @@ cost = tf.reduce_sum(loss) / batch_size
 train_op = tf.train.RMSPropOptimizer(0.01, 0.9).minimize(cost)
 
 # Launch the graph in a session
-sess.run(tf.initialize_all_variables())
+sess.run(tf.global_variables_initializer())
+
 for i in range(500):
     sess.run(train_op)
     result = sess.run(tf.argmax(d3_logics[0], 1))
-    if i% 20 == 0:
+    if i% 50 == 0:
         print(sess.run(cost))
         print(result, [char_rdic[t] for t in result])
 print(sess.run(d2_weights))
@@ -107,4 +108,5 @@ def forward_propagation(str):
 print(sess.run(state))
 print(sess.run(outputs))
 
-print(sess.run(state)[0, 0] + sess.run(outputs)[0])
+print(sess.run(state)[0])
+print(sess.run(outputs)[0])
